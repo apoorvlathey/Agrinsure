@@ -26,9 +26,10 @@ contract MyContract is ChainlinkClient{
     function makeRequest() external returns (bytes32 requestId)
     {
         Chainlink.Request memory req = buildChainlinkRequest(jobId, this, this.fulfill.selector);
-        req.add("low", "1");
-        req.add("high", "6");
-        req.add("copyPath", "random_number");
+        req.add("q", "new york"); //location
+        req.add("date", "2019-12-02"); //format: yyyy-MM-dd
+        req.add("tp", "24"); //timeperiod 24hrs
+        req.add("copyPath", "data.weather.0.hourly.0.precipMM"); //get that day's precipitation in mm
         requestId = sendChainlinkRequestTo(chainlinkOracleAddress(), req, oraclePaymentAmount);
     }
 
