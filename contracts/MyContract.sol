@@ -4,7 +4,7 @@ import "../node_modules/chainlink/contracts/ChainlinkClient.sol";
 import "DateTime.sol";
 import "github.com/Arachnid/solidity-stringutils/strings.sol";
 
-contract MyContract is ChainlinkClient{
+contract Agrinsure is ChainlinkClient{
     using strings for *;
 
     uint256 private oraclePaymentAmount;
