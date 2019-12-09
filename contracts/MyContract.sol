@@ -149,6 +149,7 @@ contract Agrinsure is ChainlinkClient{
     {
         resultReceived = true;
         //result = _result;
+        uint payoutAmount;
 
         if(policies[claimPolicyId].forFlood)
         {
@@ -157,12 +158,14 @@ contract Agrinsure is ChainlinkClient{
 
             if(_result > floodBaseMax)
             {
-                policies[claimPolicyId].user.transfer(floodMaxPayout);
+                payoutAmount = uint(policies[claimPolicyId].coverageAmount * floodMaxPayout/100);
+                policies[claimPolicyId].user.transfer(payoutAmount);
                 policies[claimPolicyId].state = policyState.PaidOut;
             }
             else
             {
-                policies[claimPolicyId].user.transfer(floodBasePayout);
+                payoutAmount = uint(policies[claimPolicyId].coverageAmount * floodBasePayout/100);
+                policies[claimPolicyId].user.transfer(payoutAmount);
                 policies[claimPolicyId].state = policyState.PaidOut;
             }
         }
@@ -173,12 +176,14 @@ contract Agrinsure is ChainlinkClient{
 
             if(_result < droughtBaseMin)
             {
-                policies[claimPolicyId].user.transfer(DroughtMaxPayout);
+                payoutAmount = uint(policies[claimPolicyId].coverageAmount * DroughtMaxPayout/100);
+                policies[claimPolicyId].user.transfer(payoutAmount);
                 policies[claimPolicyId].state = policyState.PaidOut;
             }
             else
             {
-                policies[claimPolicyId].user.transfer(DroughtBasePayout);
+                payoutAmount = uint(policies[claimPolicyId].coverageAmount * DroughtBasePayout/100);
+                policies[claimPolicyId].user.transfer(payoutAmount);
                 policies[claimPolicyId].state = policyState.PaidOut;
             }
         }
