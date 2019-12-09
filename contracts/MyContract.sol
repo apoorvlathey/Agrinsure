@@ -27,10 +27,10 @@ contract MyContract is ChainlinkClient{
         string name;
         uint premiumPerAcre;
         uint duration;          //in months
-        uint coverage;
+        uint coveragePerAcre;
     }
 
-    cropType[2] public cropTypes;
+    cropType[2] public cropTypes; //crops defined in constructor
 
     enum policyState {Pending, Active, PaidOut, TimedOut}
 
@@ -45,14 +45,18 @@ contract MyContract is ChainlinkClient{
         uint coverageAmount;  //depends on crop type
         bool forFlood;
         uint8 cropId;
+        policyState state;
     }
 
     policy[] public policies;
 
+    mapping(address => uint[]) public userPolicies;  //user address to array of policy IDs
+
     function newPolicy (uint _area, string _location, bool _forFlood, uint8 _cropId) public payable{
         require(msg.value == (cropTypes[_cropId].premiumPerAcre * _area * 10**18),"Incorrect Premium Amount");
-        
+
         uint pId = policies.length++;
+        userPolicies[msg.sender].push(pId);
         policy storage p = policies[pId];
 
         p.user = msg.sender;
@@ -61,13 +65,14 @@ contract MyContract is ChainlinkClient{
         p.startTime = now;
         p.endTime = now + cropTypes[_cropId].duration * 30*24*60*60;  //converting months to seconds
         p.location = _location;
-        p.coverageAmount = cropTypes[_cropId].coverage;
+        p.coverageAmount = cropTypes[_cropId].coveragePerAcre * _area;
         p.forFlood = _forFlood;
         p.cropId = _cropId;
+        p.state = policyState.Active;
     }
 
-    function newCrop(uint8 _cropId,string _name, uint _premiumPerAcre, uint _duration, uint _coverage) internal {
-        cropType memory c = cropType(_name, _premiumPerAcre, _duration, _coverage);
+    function newCrop(uint8 _cropId,string _name, uint _premiumPerAcre, uint _duration, uint _coveragePerAcre) internal {
+        cropType memory c = cropType(_name, _premiumPerAcre, _duration, _coveragePerAcre);
         cropTypes[_cropId] = c;
     }
 
