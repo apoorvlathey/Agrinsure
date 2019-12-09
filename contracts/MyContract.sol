@@ -4,7 +4,7 @@ import "../node_modules/chainlink/contracts/ChainlinkClient.sol";
 import "DateTime.sol";
 import "github.com/Arachnid/solidity-stringutils/strings.sol";
 
-contract Agrinsure is ChainlinkClient{
+contract Agrinsure is ChainlinkClient, DateTime{
     using strings for *;
 
     uint256 private oraclePaymentAmount;
@@ -13,7 +13,7 @@ contract Agrinsure is ChainlinkClient{
     bool public resultReceived;
     //int256 public result;
 
-    uint8 private claimPolicyId = -1;
+    uint private claimPolicyId;
 
     //for BaseMin to BaseMax -> BasePayout% . for > Max -> MaxPayout%
     uint8 constant floodBaseMin = 35;
@@ -97,7 +97,7 @@ contract Agrinsure is ChainlinkClient{
         newCrop(1, "kharif", 2, 4, 10);
     }
 
-    function claim(uint _policyId, uint _timestamp) external {
+    function claim(uint _policyId, uint _timestamp) public {
         require(msg.sender == policies[_policyId].user, "User Not Authorized");
         require(policies[_policyId].state == policyState.Active, "Policy Not Active");
 
@@ -107,16 +107,16 @@ contract Agrinsure is ChainlinkClient{
             revert("Policy's period has Ended.");
         }
 
-        string location = policies[_policyId].location;
+        string memory location = policies[_policyId].location;
 
-        uint8 year = getYear(_timestamp);
-        string y = uintToString(year);
-        uint8 month = getMonth(_timestamp);
-        string m = uintToString(month);
-        uint8 day = getDay(_timestamp);
-        string d = uintToString(day);
+        uint16 year = getYear(_timestamp);
+        string memory y = uintToString(year);
+        uint16 month = getMonth(_timestamp);
+        string memory m = uintToString(month);
+        uint16 day = getDay(_timestamp);
+        string memory d = uintToString(day);
 
-        string date = y.toSlice().concat("-".toSlice());
+        string memory date = y.toSlice().concat("-".toSlice());
         date = date.toSlice().concat(m.toSlice());
         date = date.toSlice().concat("-".toSlice());
         date = date.toSlice().concat(d.toSlice());
@@ -140,7 +140,7 @@ contract Agrinsure is ChainlinkClient{
     {
         resultReceived = false;
         //result = 0;
-        claimPolicyId = -1;
+        claimPolicyId = 0;
     }
 
     function fulfill(bytes32 _requestId, int256 _result)
@@ -176,13 +176,13 @@ contract Agrinsure is ChainlinkClient{
 
             if(_result < droughtBaseMin)
             {
-                payoutAmount = uint(policies[claimPolicyId].coverageAmount * DroughtMaxPayout/100);
+                payoutAmount = uint(policies[claimPolicyId].coverageAmount * droughtMaxPayout/100);
                 policies[claimPolicyId].user.transfer(payoutAmount);
                 policies[claimPolicyId].state = policyState.PaidOut;
             }
             else
             {
-                payoutAmount = uint(policies[claimPolicyId].coverageAmount * DroughtBasePayout/100);
+                payoutAmount = uint(policies[claimPolicyId].coverageAmount * droughtBasePayout/100);
                 policies[claimPolicyId].user.transfer(payoutAmount);
                 policies[claimPolicyId].state = policyState.PaidOut;
             }
