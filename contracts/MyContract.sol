@@ -1,8 +1,12 @@
 pragma solidity 0.4.24;
 
 import "../node_modules/chainlink/contracts/ChainlinkClient.sol";
+import "DateTime.sol";
+import "github.com/Arachnid/solidity-stringutils/strings.sol";
 
 contract MyContract is ChainlinkClient{
+    using strings for *;
+
     uint256 private oraclePaymentAmount;
     bytes32 private jobId;
 
@@ -25,9 +29,9 @@ contract MyContract is ChainlinkClient{
 
     struct cropType {
         string name;
-        uint premiumPerAcre;
+        uint premiumPerAcre;    //in wei
         uint duration;          //in months
-        uint coveragePerAcre;
+        uint coveragePerAcre;   //in wei
     }
 
     cropType[2] public cropTypes; //crops defined in constructor
@@ -52,8 +56,8 @@ contract MyContract is ChainlinkClient{
 
     mapping(address => uint[]) public userPolicies;  //user address to array of policy IDs
 
-    function newPolicy (uint _area, string _location, bool _forFlood, uint8 _cropId) public payable{
-        require(msg.value == (cropTypes[_cropId].premiumPerAcre * _area * 10**18),"Incorrect Premium Amount");
+    function newPolicy (uint _area, string _location, bool _forFlood, uint8 _cropId) external payable{
+        require(msg.value == (cropTypes[_cropId].premiumPerAcre * _area),"Incorrect Premium Amount");
 
         uint pId = policies.length++;
         userPolicies[msg.sender].push(pId);
@@ -93,12 +97,31 @@ contract MyContract is ChainlinkClient{
         newCrop(1, "kharif", 2, 4, 10);
     }
 
-    function makeRequest() external returns (bytes32 requestId)
+    function claim(uint _policyId, uint _timestamp) external {
+        require(msg.sender == policies[_policyId].user, "User Not Authorized");
+
+        string location = policies[_policyId].location;
+
+        uint8 year = getYear(_timestamp);
+        string y = uintToString(year);
+        uint8 month = getMonth(_timestamp);
+        string m = uintToString(month);
+        uint8 day = getDay(_timestamp);
+        string d = uintToString(day);
+
+        string date = y.toSlice().concat("-".toSlice());
+        date = date.toSlice().concat(m.toSlice());
+        date = date.toSlice().concat("-".toSlice());
+        date = date.toSlice().concat(d.toSlice());
+
+    }
+
+    function makeRequest(string _location, string _date) internal returns (bytes32 requestId)
     {
         Chainlink.Request memory req = buildChainlinkRequest(jobId, this, this.fulfill.selector);
-        req.add("q", "new york"); //location
-        req.add("date", "2019-12-02"); //format: yyyy-MM-dd
-        req.add("tp", "24"); //timeperiod 24hrs
+        req.add("q", _location);      //location
+        req.add("date", _date); //format: yyyy-MM-dd
+        req.add("tp", "24");           //timeperiod 24hrs
         req.add("copyPath", "data.weather.0.hourly.0.precipMM"); //get that day's precipitation in mm
         requestId = sendChainlinkRequestTo(chainlinkOracleAddress(), req, oraclePaymentAmount);
     }
@@ -115,5 +138,21 @@ contract MyContract is ChainlinkClient{
     {
         resultReceived = true;
         result = _result;
+    }
+
+    function uintToString(uint v) constant returns (string str) {
+        uint maxlength = 100;
+        bytes memory reversed = new bytes(maxlength);
+        uint i = 0;
+        while (v != 0) {
+            uint remainder = v % 10;
+            v = v / 10;
+            reversed[i++] = byte(48 + remainder);
+        }
+        bytes memory s = new bytes(i);
+        for (uint j = 0; j < i; j++) {
+            s[j] = reversed[i - 1 - j];
+        }
+        str = string(s);
     }
 }
