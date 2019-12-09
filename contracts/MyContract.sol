@@ -106,6 +106,8 @@ contract Agrinsure is ChainlinkClient, DateTime{
             policies[_policyId].state = policyState.TimedOut;
             revert("Policy's period has Ended.");
         }
+        // if(_timestamp < policies[_policyId].startTime)
+        //     revert("Insurance Not Covered by Policy");
 
         string memory location = policies[_policyId].location;
 
