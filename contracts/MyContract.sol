@@ -11,19 +11,19 @@ contract MyContract is ChainlinkClient{
     bytes32 private jobId;
 
     bool public resultReceived;
-    int256 public result;
+    //int256 public result;
+
+    uint8 private claimPolicyId = -1;
 
     //for BaseMin to BaseMax -> BasePayout% . for > Max -> MaxPayout%
-    uint8 constant floodBaseMin = 111;
-    uint8 constant floodBaseMax = 111;
-    uint8 constant floodMax = 111;
+    uint8 constant floodBaseMin = 35;
+    uint8 constant floodBaseMax = 50;
     uint8 constant floodBasePayout = 50;  //50% of yield
     uint8 constant floodMaxPayout = 100;  //100% of yield
 
     //for BaseMin to BaseMax -> BasePayout% . for < Min -> MaxPayout%
-    uint8 constant droughtBaseMin = 111;
-    uint8 constant droughtBaseMax = 111;
-    uint8 constant droughtMin = 111;
+    uint8 constant droughtBaseMin = 63;
+    uint8 constant droughtBaseMax = 83;
     uint8 constant droughtBasePayout = 50;  //50% of yield
     uint8 constant droughtMaxPayout = 100;  //100% of yield
 
@@ -99,6 +99,13 @@ contract MyContract is ChainlinkClient{
 
     function claim(uint _policyId, uint _timestamp) external {
         require(msg.sender == policies[_policyId].user, "User Not Authorized");
+        require(policies[_policyId].state == policyState.Active, "Policy Not Active");
+
+        if(now > policies[_policyId].endTime)
+        {
+            policies[_policyId].state = policyState.TimedOut;
+            revert("Policy's period has Ended.");
+        }
 
         string location = policies[_policyId].location;
 
@@ -114,6 +121,9 @@ contract MyContract is ChainlinkClient{
         date = date.toSlice().concat("-".toSlice());
         date = date.toSlice().concat(d.toSlice());
 
+        claimPolicyId = _policyId;
+        makeRequest(location, date);
+
     }
 
     function makeRequest(string _location, string _date) internal returns (bytes32 requestId)
@@ -126,10 +136,11 @@ contract MyContract is ChainlinkClient{
         requestId = sendChainlinkRequestTo(chainlinkOracleAddress(), req, oraclePaymentAmount);
     }
 
-    function resetResult() external
+    function resetResult() internal
     {
         resultReceived = false;
-        result = 0;
+        //result = 0;
+        claimPolicyId = -1;
     }
 
     function fulfill(bytes32 _requestId, int256 _result)
@@ -137,10 +148,45 @@ contract MyContract is ChainlinkClient{
     recordChainlinkFulfillment(_requestId)
     {
         resultReceived = true;
-        result = _result;
+        //result = _result;
+
+        if(policies[claimPolicyId].forFlood)
+        {
+            if(_result < floodBaseMin)
+                revert("There is No Flood");
+
+            if(_result > floodBaseMax)
+            {
+                policies[claimPolicyId].user.transfer(floodMaxPayout);
+                policies[claimPolicyId].state = policyState.PaidOut;
+            }
+            else
+            {
+                policies[claimPolicyId].user.transfer(floodBasePayout);
+                policies[claimPolicyId].state = policyState.PaidOut;
+            }
+        }
+        else
+        {
+            if(_result > droughtBaseMax)
+                revert("There is No Drought");
+
+            if(_result < droughtBaseMin)
+            {
+                policies[claimPolicyId].user.transfer(DroughtMaxPayout);
+                policies[claimPolicyId].state = policyState.PaidOut;
+            }
+            else
+            {
+                policies[claimPolicyId].user.transfer(DroughtBasePayout);
+                policies[claimPolicyId].state = policyState.PaidOut;
+            }
+        }
+
+        resetResult();
     }
 
-    function uintToString(uint v) constant returns (string str) {
+    function uintToString(uint v) pure internal returns (string str) {
         uint maxlength = 100;
         bytes memory reversed = new bytes(maxlength);
         uint i = 0;
