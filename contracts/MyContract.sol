@@ -16,16 +16,16 @@ contract Agrinsure is ChainlinkClient, DateTime{
     uint private claimPolicyId;
 
     //for BaseMin to BaseMax -> BasePayout% . for > Max -> MaxPayout%
-    uint8 constant floodBaseMin = 35;
-    uint8 constant floodBaseMax = 50;
-    uint8 constant floodBasePayout = 50;  //50% of yield
-    uint8 constant floodMaxPayout = 100;  //100% of yield
+    uint8 constant floodBaseMin = 10;
+    uint8 constant floodBaseMax = 15;
+    uint8 constant floodBasePayout = 50;  //50% of coverage
+    uint8 constant floodMaxPayout = 100;  //100% of coverage
 
     //for BaseMin to BaseMax -> BasePayout% . for < Min -> MaxPayout%
-    uint8 constant droughtBaseMin = 63;
-    uint8 constant droughtBaseMax = 83;
-    uint8 constant droughtBasePayout = 50;  //50% of yield
-    uint8 constant droughtMaxPayout = 100;  //100% of yield
+    uint8 constant droughtBaseMin = 2;
+    uint8 constant droughtBaseMax = 5;
+    uint8 constant droughtBasePayout = 50;  //50% of coverage
+    uint8 constant droughtMaxPayout = 100;  //100% of coverage
 
     struct cropType {
         string name;
@@ -192,6 +192,9 @@ contract Agrinsure is ChainlinkClient, DateTime{
 
         resetResult();
     }
+    
+    //Fallback function to implement the ability for the Contract Address to Accept Ether
+    function() public payable {}
 
     function uintToString(uint v) pure internal returns (string str) {
         uint maxlength = 100;
