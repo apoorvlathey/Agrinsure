@@ -30,7 +30,7 @@ contract MyContract is ChainlinkClient{
         uint coverage;
     }
 
-    cropType[] public cropTypes;
+    cropType[2] public cropTypes;
 
     enum policyState {Pending, Active, PaidOut, TimedOut}
 
@@ -50,7 +50,7 @@ contract MyContract is ChainlinkClient{
     policy[] public policies;
 
     function newPolicy (uint _area, string _location, bool _forFlood, uint8 _cropId) public payable{
-        require(msg.value == cropTypes[_cropId].premiumPerAcre * _area);
+        require(msg.value == (cropTypes[_cropId].premiumPerAcre * _area * 10**18),"Incorrect Premium Amount");
         
         uint pId = policies.length++;
         policy storage p = policies[pId];
@@ -68,8 +68,7 @@ contract MyContract is ChainlinkClient{
 
     function newCrop(uint8 _cropId,string _name, uint _premiumPerAcre, uint _duration, uint _coverage) internal {
         cropType memory c = cropType(_name, _premiumPerAcre, _duration, _coverage);
-        cropTypes.push(c);
-        //cropTypes[_cropId] = c;
+        cropTypes[_cropId] = c;
     }
 
     constructor(
@@ -85,8 +84,8 @@ contract MyContract is ChainlinkClient{
         jobId = _jobId;
         oraclePaymentAmount = _oraclePaymentAmount;
 
-        newCrop(0, "rabi", 1000, 6, 70000);
-        newCrop(1, "kharif", 1400, 4, 95000);
+        newCrop(0, "rabi", 1, 6, 7);
+        newCrop(1, "kharif", 2, 4, 10);
     }
 
     function makeRequest() external returns (bytes32 requestId)
