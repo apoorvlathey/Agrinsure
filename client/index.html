@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <link href="https://unpkg.com/cirrus-ui" type="text/css" rel="stylesheet" />
+  <title>Agrinsure | HomePage</title>
+  <link href="https://fonts.googleapis.com/css?family=Nunito+Sans:200,300,400,600,700" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css?family=Montserrat:400,700" rel="stylesheet">
+
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.2.0/css/all.css"
+    integrity="sha384-hWVjflwFxL6sNzntih27bfxkr27PmbbK/iSvJ+a4+0owXq79v+lsFkW54bOGbiDQ" crossorigin="anonymous">
+
+  <script src="https://code.jquery.com/jquery-2.2.4.min.js"
+    integrity="sha256-BbhdlvQf/xTY9gja0Dq3HiwQF8LaCRTXxZKRutelT44=" crossorigin="anonymous"></script>
+
+  <style>
+    .header-clear-mod a {
+      color: #fff;
+    }
+
+    #fade {
+      background-image: linear-gradient(to bottom, rgba(255, 255, 255, 0.0001), #fff);
+      bottom: 0;
+      height: 175px;
+      left: 0;
+      right: 0;
+      opacity: 0;
+      position: absolute;
+      transition: all .3s;
+    }
+
+    #fade.faded {
+      opacity: 1;
+      transition: all .3s;
+    }
+  </style>
+</head>
+
+<body>
+
+  <div id="header" class="header header-top header-fixed unselectable header-animated header-clear-mod header-clear">
+    <div class="header-brand">
+      <div class="nav-item no-hover">
+        <a>
+          <h5 class="title">Cirrus</h5>
+        </a>
+      </div>
+      <div class="nav-item nav-btn" id="header-btn">
+        <span></span>
+        <span></span>
+        <span></span>
+      </div>
+    </div>
+    <div class="header-nav" id="header-menu">
+
+      <div class="nav-right">
+        <div class="nav-item">
+          <a class="smoothScroll" href="#colors">
+            <span class="icon">
+              <i class="fas fa-wrapper fa-pen-fancy small"></i>
+            </span>
+            Design and Colors</a>
+        </div>
+        <div class="nav-item">
+          <a class="smoothScroll" href="#examples">
+            <span class="icon">
+              <i class="fas fa-wrapper fa-palette small"></i>
+            </span>
+            Examples</a>
+        </div>
+        <div class="nav-item">
+          <a href="./docs">
+            <span class="icon">
+              <i class="fas fa-wrapper fa-boxes small"></i>
+            </span>
+            Docs
+          </a>
+        </div>
+        <div class="nav-item has-sub" style="padding: 0.5rem;">
+          <div class="list-dropdown dropdown-right">
+            <div class="btn-group">
+              <button class="btn-primary u-no-padding">
+                <a class="font-normal" href="https://github.com/Spiderpig86/Cirrus/releases" target="_blank">
+                  <span class="icon">
+                    <i class="fas fa-wrapper fa-cloud-download-alt small"></i>
+                  </span><span>Download</span>
+                </a>
+              </button>
+              <button class="btn-primary btn-small btn-dropdown  u-no-shadow"><span class="icon"><i
+                    class="fa fa-caret-down small"></i></span></button>
+              <ul class="menu">
+                <li class="menu-item selected">
+                  <a href="#">0.5.5</a>
+                </li>
+                <li class="menu-item">
+                  <a href="https://spiderpig86.github.io/Cirrus/0.5.4">0.5.4</a>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <section id="splash">
+    <div id="splash-img" class="hero fullscreen hero-img parallax-img" style="background: url(https://images.unsplash.com/photo-1508182314998-3bd49473002f?ixlib=rb-0.3.5&s=f8ac09c…&auto=format&fit=crop&w=2560&q=100);
+    background-size: cover;
+    background-repeat: no-repeat;">
+      <div id="hero-body" class="hero-body">
+        <div class="content u-text-center">
+          <h5 class="uppercase white sub-title">A gorgeous CSS framework for the web.</h5>
+          <h1 class="headline-1 white title">Cirrus.CSS</h1>
+
+          <p class="white"><b>v.0.5.5 / 15.1kb GZIPPED</b></p>
+
+          <a href="./docs/start" class="u-inline-block">
+            <button class="btn-light outline">
+              Get Started
+            </button>
+          </a>
+        </div>
+      </div>
+      <div id="fade"></div>
+    </div>
+  </section>
+
+  <section id="intro" class="padtop">
+    <div class="content u-text-center">
+      <h6 class="uppercase font-bold">Created By
+        <span style="color: var(--cirrus-primary);">Stanley Lim</span>
+      </h6>
+      <space class="large"></space>
+      <h6 class="font-alt font-normal">A fully responsive and comprehensive CSS framework with beautiful controls and
+        simplistic structure. Integrate
+        it with any existing design or use it to kick start your next project.</h6>
+      <space class="x-large"></space>
+      <div class="divider"></div>
+    </div>
+  </section>
+
+
+  <script>
+    $(document).ready(function () {
+
+      if ($(window).scrollTop() >= 120) {
+        $('#header').addClass('header-dark');
+        $('#header').removeClass('header-clear-mod');
+      } else {
+        $('#header').addClass('header-clear-mod');
+        $('#header').removeClass('header-dark');
+      }
+
+      $(window).scroll(function () {
+        if ($(window).scrollTop() >= 120) {
+          $('#header').addClass('header-dark');
+          $('#header').removeClass('header-clear-mod');
+          $('#header').removeClass('header-clear');
+          $('#fade').addClass('faded');
+        } else {
+          $('#header').addClass('header-clear-mod');
+          $('#header').addClass('header-clear');
+          $('#header').removeClass('header-dark');
+          $('#fade').removeClass('faded');
+        }
+      });
+    });
+  </script>
+</body>
+
+</html>
