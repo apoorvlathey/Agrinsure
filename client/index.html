@@ -21,6 +21,12 @@
       color: #fff;
     }
 
+    #splash-img {
+      background: url("./img/splashLeaves.jpg");
+      background-size: cover;
+      background-repeat: no-repeat;
+    }
+
     #fade {
       background-image: linear-gradient(to bottom, rgba(255, 255, 255, 0.0001), #fff);
       bottom: 0;
@@ -45,7 +51,7 @@
     <div class="header-brand">
       <div class="nav-item no-hover">
         <a>
-          <h5 class="title">Cirrus</h5>
+          <h5 class="title"><i class="fas fa-wrapper fa-leaf small"></i> Agrinsure</h5>
         </a>
       </div>
       <div class="nav-item nav-btn" id="header-btn">
@@ -60,9 +66,10 @@
         <div class="nav-item">
           <a class="smoothScroll" href="#colors">
             <span class="icon">
-              <i class="fas fa-wrapper fa-pen-fancy small"></i>
+              <i class="fas fa-wrapper fa-cog small"></i>
             </span>
-            Design and Colors</a>
+            How it Works?
+          </a>
         </div>
         <div class="nav-item">
           <a class="smoothScroll" href="#examples">
@@ -82,23 +89,11 @@
         <div class="nav-item has-sub" style="padding: 0.5rem;">
           <div class="list-dropdown dropdown-right">
             <div class="btn-group">
-              <button class="btn-primary u-no-padding">
+              <button class="btn-success u-no-padding">
                 <a class="font-normal" href="https://github.com/Spiderpig86/Cirrus/releases" target="_blank">
-                  <span class="icon">
-                    <i class="fas fa-wrapper fa-cloud-download-alt small"></i>
-                  </span><span>Download</span>
+                  <span>Claim Insurance</span>
                 </a>
               </button>
-              <button class="btn-primary btn-small btn-dropdown  u-no-shadow"><span class="icon"><i
-                    class="fa fa-caret-down small"></i></span></button>
-              <ul class="menu">
-                <li class="menu-item selected">
-                  <a href="#">0.5.5</a>
-                </li>
-                <li class="menu-item">
-                  <a href="https://spiderpig86.github.io/Cirrus/0.5.4">0.5.4</a>
-                </li>
-              </ul>
             </div>
           </div>
         </div>
@@ -107,19 +102,17 @@
   </div>
 
   <section id="splash">
-    <div id="splash-img" class="hero fullscreen hero-img parallax-img" style="background: url(https://images.unsplash.com/photo-1508182314998-3bd49473002f?ixlib=rb-0.3.5&s=f8ac09c…&auto=format&fit=crop&w=2560&q=100);
-    background-size: cover;
-    background-repeat: no-repeat;">
+    <div id="splash-img" class="hero fullscreen hero-img parallax-img">
       <div id="hero-body" class="hero-body">
         <div class="content u-text-center">
-          <h5 class="uppercase white sub-title">A gorgeous CSS framework for the web.</h5>
-          <h1 class="headline-1 white title">Cirrus.CSS</h1>
+          <h5 class="uppercase white sub-title">Decentralized Crop Insurance against Floods and Droughts</h5>
+          <h1 class="headline-1 white title">Agrinsure</h1>
 
-          <p class="white"><b>v.0.5.5 / 15.1kb GZIPPED</b></p>
+          <p class="white"><b>No Middle-man, Guaranteed Payouts</b></p>
 
           <a href="./docs/start" class="u-inline-block">
-            <button class="btn-light outline">
-              Get Started
+            <button class="btn-light outline" style="border: 1px solid limegreen">
+              Create Policy
             </button>
           </a>
         </div>
