@@ -1,0 +1,581 @@
+[
+	{
+		"constant": false,
+		"inputs": [
+			{
+				"name": "_policyId",
+				"type": "uint256"
+			},
+			{
+				"name": "_timestamp",
+				"type": "uint256"
+			}
+		],
+		"name": "claim",
+		"outputs": [],
+		"payable": false,
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+		"constant": false,
+		"inputs": [
+			{
+				"name": "_requestId",
+				"type": "bytes32"
+			},
+			{
+				"name": "_result",
+				"type": "int256"
+			}
+		],
+		"name": "fulfill",
+		"outputs": [],
+		"payable": false,
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+		"constant": false,
+		"inputs": [
+			{
+				"name": "_area",
+				"type": "uint256"
+			},
+			{
+				"name": "_location",
+				"type": "string"
+			},
+			{
+				"name": "_forFlood",
+				"type": "bool"
+			},
+			{
+				"name": "_cropId",
+				"type": "uint8"
+			}
+		],
+		"name": "newPolicy",
+		"outputs": [],
+		"payable": true,
+		"stateMutability": "payable",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
+				"name": "_link",
+				"type": "address"
+			},
+			{
+				"name": "_oracle",
+				"type": "address"
+			},
+			{
+				"name": "_jobId",
+				"type": "bytes32"
+			},
+			{
+				"name": "_oraclePaymentAmount",
+				"type": "uint256"
+			}
+		],
+		"payable": false,
+		"stateMutability": "nonpayable",
+		"type": "constructor"
+	},
+	{
+		"payable": true,
+		"stateMutability": "payable",
+		"type": "fallback"
+	},
+	{
+		"anonymous": false,
+		"inputs": [
+			{
+				"indexed": true,
+				"name": "id",
+				"type": "bytes32"
+			}
+		],
+		"name": "ChainlinkRequested",
+		"type": "event"
+	},
+	{
+		"anonymous": false,
+		"inputs": [
+			{
+				"indexed": true,
+				"name": "id",
+				"type": "bytes32"
+			}
+		],
+		"name": "ChainlinkFulfilled",
+		"type": "event"
+	},
+	{
+		"anonymous": false,
+		"inputs": [
+			{
+				"indexed": true,
+				"name": "id",
+				"type": "bytes32"
+			}
+		],
+		"name": "ChainlinkCancelled",
+		"type": "event"
+	},
+	{
+		"constant": true,
+		"inputs": [
+			{
+				"name": "",
+				"type": "uint256"
+			}
+		],
+		"name": "cropTypes",
+		"outputs": [
+			{
+				"name": "name",
+				"type": "string"
+			},
+			{
+				"name": "premiumPerAcre",
+				"type": "uint256"
+			},
+			{
+				"name": "duration",
+				"type": "uint256"
+			},
+			{
+				"name": "coveragePerAcre",
+				"type": "uint256"
+			}
+		],
+		"payable": false,
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"constant": true,
+		"inputs": [
+			{
+				"name": "timestamp",
+				"type": "uint256"
+			}
+		],
+		"name": "getDay",
+		"outputs": [
+			{
+				"name": "",
+				"type": "uint8"
+			}
+		],
+		"payable": false,
+		"stateMutability": "pure",
+		"type": "function"
+	},
+	{
+		"constant": true,
+		"inputs": [
+			{
+				"name": "month",
+				"type": "uint8"
+			},
+			{
+				"name": "year",
+				"type": "uint16"
+			}
+		],
+		"name": "getDaysInMonth",
+		"outputs": [
+			{
+				"name": "",
+				"type": "uint8"
+			}
+		],
+		"payable": false,
+		"stateMutability": "pure",
+		"type": "function"
+	},
+	{
+		"constant": true,
+		"inputs": [
+			{
+				"name": "timestamp",
+				"type": "uint256"
+			}
+		],
+		"name": "getHour",
+		"outputs": [
+			{
+				"name": "",
+				"type": "uint8"
+			}
+		],
+		"payable": false,
+		"stateMutability": "pure",
+		"type": "function"
+	},
+	{
+		"constant": true,
+		"inputs": [
+			{
+				"name": "timestamp",
+				"type": "uint256"
+			}
+		],
+		"name": "getMinute",
+		"outputs": [
+			{
+				"name": "",
+				"type": "uint8"
+			}
+		],
+		"payable": false,
+		"stateMutability": "pure",
+		"type": "function"
+	},
+	{
+		"constant": true,
+		"inputs": [
+			{
+				"name": "timestamp",
+				"type": "uint256"
+			}
+		],
+		"name": "getMonth",
+		"outputs": [
+			{
+				"name": "",
+				"type": "uint8"
+			}
+		],
+		"payable": false,
+		"stateMutability": "pure",
+		"type": "function"
+	},
+	{
+		"constant": true,
+		"inputs": [
+			{
+				"name": "timestamp",
+				"type": "uint256"
+			}
+		],
+		"name": "getSecond",
+		"outputs": [
+			{
+				"name": "",
+				"type": "uint8"
+			}
+		],
+		"payable": false,
+		"stateMutability": "pure",
+		"type": "function"
+	},
+	{
+		"constant": true,
+		"inputs": [
+			{
+				"name": "timestamp",
+				"type": "uint256"
+			}
+		],
+		"name": "getWeekday",
+		"outputs": [
+			{
+				"name": "",
+				"type": "uint8"
+			}
+		],
+		"payable": false,
+		"stateMutability": "pure",
+		"type": "function"
+	},
+	{
+		"constant": true,
+		"inputs": [
+			{
+				"name": "timestamp",
+				"type": "uint256"
+			}
+		],
+		"name": "getYear",
+		"outputs": [
+			{
+				"name": "",
+				"type": "uint16"
+			}
+		],
+		"payable": false,
+		"stateMutability": "pure",
+		"type": "function"
+	},
+	{
+		"constant": true,
+		"inputs": [
+			{
+				"name": "year",
+				"type": "uint16"
+			}
+		],
+		"name": "isLeapYear",
+		"outputs": [
+			{
+				"name": "",
+				"type": "bool"
+			}
+		],
+		"payable": false,
+		"stateMutability": "pure",
+		"type": "function"
+	},
+	{
+		"constant": true,
+		"inputs": [
+			{
+				"name": "year",
+				"type": "uint256"
+			}
+		],
+		"name": "leapYearsBefore",
+		"outputs": [
+			{
+				"name": "",
+				"type": "uint256"
+			}
+		],
+		"payable": false,
+		"stateMutability": "pure",
+		"type": "function"
+	},
+	{
+		"constant": true,
+		"inputs": [
+			{
+				"name": "",
+				"type": "uint256"
+			}
+		],
+		"name": "policies",
+		"outputs": [
+			{
+				"name": "policyId",
+				"type": "uint256"
+			},
+			{
+				"name": "user",
+				"type": "address"
+			},
+			{
+				"name": "premium",
+				"type": "uint256"
+			},
+			{
+				"name": "area",
+				"type": "uint256"
+			},
+			{
+				"name": "startTime",
+				"type": "uint256"
+			},
+			{
+				"name": "endTime",
+				"type": "uint256"
+			},
+			{
+				"name": "location",
+				"type": "string"
+			},
+			{
+				"name": "coverageAmount",
+				"type": "uint256"
+			},
+			{
+				"name": "forFlood",
+				"type": "bool"
+			},
+			{
+				"name": "cropId",
+				"type": "uint8"
+			},
+			{
+				"name": "state",
+				"type": "uint8"
+			}
+		],
+		"payable": false,
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"constant": true,
+		"inputs": [],
+		"name": "resultReceived",
+		"outputs": [
+			{
+				"name": "",
+				"type": "bool"
+			}
+		],
+		"payable": false,
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"constant": true,
+		"inputs": [
+			{
+				"name": "year",
+				"type": "uint16"
+			},
+			{
+				"name": "month",
+				"type": "uint8"
+			},
+			{
+				"name": "day",
+				"type": "uint8"
+			},
+			{
+				"name": "hour",
+				"type": "uint8"
+			},
+			{
+				"name": "minute",
+				"type": "uint8"
+			}
+		],
+		"name": "toTimestamp",
+		"outputs": [
+			{
+				"name": "timestamp",
+				"type": "uint256"
+			}
+		],
+		"payable": false,
+		"stateMutability": "pure",
+		"type": "function"
+	},
+	{
+		"constant": true,
+		"inputs": [
+			{
+				"name": "year",
+				"type": "uint16"
+			},
+			{
+				"name": "month",
+				"type": "uint8"
+			},
+			{
+				"name": "day",
+				"type": "uint8"
+			},
+			{
+				"name": "hour",
+				"type": "uint8"
+			}
+		],
+		"name": "toTimestamp",
+		"outputs": [
+			{
+				"name": "timestamp",
+				"type": "uint256"
+			}
+		],
+		"payable": false,
+		"stateMutability": "pure",
+		"type": "function"
+	},
+	{
+		"constant": true,
+		"inputs": [
+			{
+				"name": "year",
+				"type": "uint16"
+			},
+			{
+				"name": "month",
+				"type": "uint8"
+			},
+			{
+				"name": "day",
+				"type": "uint8"
+			}
+		],
+		"name": "toTimestamp",
+		"outputs": [
+			{
+				"name": "timestamp",
+				"type": "uint256"
+			}
+		],
+		"payable": false,
+		"stateMutability": "pure",
+		"type": "function"
+	},
+	{
+		"constant": true,
+		"inputs": [
+			{
+				"name": "year",
+				"type": "uint16"
+			},
+			{
+				"name": "month",
+				"type": "uint8"
+			},
+			{
+				"name": "day",
+				"type": "uint8"
+			},
+			{
+				"name": "hour",
+				"type": "uint8"
+			},
+			{
+				"name": "minute",
+				"type": "uint8"
+			},
+			{
+				"name": "second",
+				"type": "uint8"
+			}
+		],
+		"name": "toTimestamp",
+		"outputs": [
+			{
+				"name": "timestamp",
+				"type": "uint256"
+			}
+		],
+		"payable": false,
+		"stateMutability": "pure",
+		"type": "function"
+	},
+	{
+		"constant": true,
+		"inputs": [
+			{
+				"name": "",
+				"type": "address"
+			},
+			{
+				"name": "",
+				"type": "uint256"
+			}
+		],
+		"name": "userPolicies",
+		"outputs": [
+			{
+				"name": "",
+				"type": "uint256"
+			}
+		],
+		"payable": false,
+		"stateMutability": "view",
+		"type": "function"
+	}
+]
