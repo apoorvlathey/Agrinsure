@@ -1,8 +1,8 @@
 pragma solidity 0.4.24;
 
 import "../node_modules/chainlink/contracts/ChainlinkClient.sol";
-import "DateTime.sol";
-import "github.com/Arachnid/solidity-stringutils/strings.sol";
+import "./DateTime.sol";
+import "./strings.sol";
 
 contract Agrinsure is ChainlinkClient, DateTime{
     using strings for *;
