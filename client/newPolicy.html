@@ -522,6 +522,11 @@
             $("#create").removeClass('animated loading u-center loading-right loading-white');
             $("#create").text("Policy Created!");
           })
+          .catch(e => {
+            $("#create").removeClass('animated loading u-center loading-right loading-white');
+            $("#create").text("There was an Error.");
+            $("#create").css("background", "var(--cirrus-danger)");
+          })
       });
     });
 
