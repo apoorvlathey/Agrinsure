@@ -374,22 +374,23 @@
 
             <div class="divider"></div>
 
-            <div class="form-section">
+            <div class="form-section changeInput">
               <label class="font-semibold">Crop Type:</label>
               <div class="input-control">
                 <div class="form-ext-control form-ext-radio">
-                  <input id="radio-1c" name="customRadio1" class="form-ext-input form-ext-input--success" type="radio"
-                    checked>
-                  <label class="form-ext-label" for="radio-1c">Rabi</label>
+                  <input id="crop-rabi" name="crop" class="form-ext-input form-ext-input--success" type="radio" checked
+                    value="0">
+                  <label class="form-ext-label" for="crop-rabi">Rabi</label>
                 </div>
                 <div class="form-ext-control form-ext-radio">
-                  <input id="radio-2c" name="customRadio1" class="form-ext-input form-ext-input--success" type="radio">
-                  <label class="form-ext-label" for="radio-2c">Kharif</label>
+                  <input id="crop-kharif" name="crop" class="form-ext-input form-ext-input--success" type="radio"
+                    value="1">
+                  <label class="form-ext-label" for="crop-kharif">Kharif</label>
                 </div>
               </div>
             </div>
 
-            <div class="form-section">
+            <div class="form-section changeInput">
               <label class="font-semibold">Area:</label>
               <div class="input-control">
                 <input class="input-contains-icon" id="area" name="area" placeholder="in Acres" type="text" value="">
@@ -400,13 +401,14 @@
               <label class="font-semibold">Policy For:</label>
               <div class="input-control">
                 <div class="form-ext-control form-ext-radio">
-                  <input id="radio-3c" name="customRadio2" class="form-ext-input form-ext-input--success" type="radio"
-                    checked>
-                  <label class="form-ext-label" for="radio-3c">Flood</label>
+                  <input id="flood" name="forFlood" class="form-ext-input form-ext-input--success" type="radio" checked
+                    value="1">
+                  <label class="form-ext-label" for="flood">Flood</label>
                 </div>
                 <div class="form-ext-control form-ext-radio">
-                  <input id="radio-4c" name="customRadio2" class="form-ext-input form-ext-input--success" type="radio">
-                  <label class="form-ext-label" for="radio-4c">Drought</label>
+                  <input id="drought" name="forFlood" class="form-ext-input form-ext-input--success" type="radio"
+                    value="0">
+                  <label class="form-ext-label" for="drought">Drought</label>
                 </div>
               </div>
             </div>
@@ -414,7 +416,7 @@
             <div class="form-section">
               <label class="font-semibold">Location:</label>
               <div class="input-control">
-                <select id="subscription" name="subscription">
+                <select id="city" name="city">
                   <option value="new york">New York</option>
                   <option value="delhi">Delhi</option>
                   <option value="burundi">Burundi</option>
@@ -422,9 +424,16 @@
               </div>
             </div>
 
+            <div class="form-section">
+              <label class="font-semibold">Premium to Pay (in wei) :</label>
+              <div class="input-control">
+                <input class="input-contains-icon" id="premium" name="premium" type="text" value="0" disabled>
+              </div>
+            </div>
+
             <div class="form-section u-text-right">
               <div class="btn-container u-inline-block">
-                <button class="btn-success">
+                <button class="white" style="background: var(--cirrus-success)" id="create">
                   Create
                 </button>
               </div>
@@ -471,16 +480,51 @@
 
     var AgrinsureContract = new web3.eth.Contract([{ "constant": false, "inputs": [{ "name": "_policyId", "type": "uint256" }, { "name": "_timestamp", "type": "uint256" }], "name": "claim", "outputs": [], "payable": false, "stateMutability": "nonpayable", "type": "function" }, { "constant": false, "inputs": [{ "name": "_requestId", "type": "bytes32" }, { "name": "_result", "type": "int256" }], "name": "fulfill", "outputs": [], "payable": false, "stateMutability": "nonpayable", "type": "function" }, { "constant": false, "inputs": [{ "name": "_area", "type": "uint256" }, { "name": "_location", "type": "string" }, { "name": "_forFlood", "type": "bool" }, { "name": "_cropId", "type": "uint8" }], "name": "newPolicy", "outputs": [], "payable": true, "stateMutability": "payable", "type": "function" }, { "inputs": [{ "name": "_link", "type": "address" }, { "name": "_oracle", "type": "address" }, { "name": "_jobId", "type": "bytes32" }, { "name": "_oraclePaymentAmount", "type": "uint256" }], "payable": false, "stateMutability": "nonpayable", "type": "constructor" }, { "payable": true, "stateMutability": "payable", "type": "fallback" }, { "anonymous": false, "inputs": [{ "indexed": true, "name": "id", "type": "bytes32" }], "name": "ChainlinkRequested", "type": "event" }, { "anonymous": false, "inputs": [{ "indexed": true, "name": "id", "type": "bytes32" }], "name": "ChainlinkFulfilled", "type": "event" }, { "anonymous": false, "inputs": [{ "indexed": true, "name": "id", "type": "bytes32" }], "name": "ChainlinkCancelled", "type": "event" }, { "constant": true, "inputs": [{ "name": "", "type": "uint256" }], "name": "cropTypes", "outputs": [{ "name": "name", "type": "string" }, { "name": "premiumPerAcre", "type": "uint256" }, { "name": "duration", "type": "uint256" }, { "name": "coveragePerAcre", "type": "uint256" }], "payable": false, "stateMutability": "view", "type": "function" }, { "constant": true, "inputs": [{ "name": "timestamp", "type": "uint256" }], "name": "getDay", "outputs": [{ "name": "", "type": "uint8" }], "payable": false, "stateMutability": "pure", "type": "function" }, { "constant": true, "inputs": [{ "name": "month", "type": "uint8" }, { "name": "year", "type": "uint16" }], "name": "getDaysInMonth", "outputs": [{ "name": "", "type": "uint8" }], "payable": false, "stateMutability": "pure", "type": "function" }, { "constant": true, "inputs": [{ "name": "timestamp", "type": "uint256" }], "name": "getHour", "outputs": [{ "name": "", "type": "uint8" }], "payable": false, "stateMutability": "pure", "type": "function" }, { "constant": true, "inputs": [{ "name": "timestamp", "type": "uint256" }], "name": "getMinute", "outputs": [{ "name": "", "type": "uint8" }], "payable": false, "stateMutability": "pure", "type": "function" }, { "constant": true, "inputs": [{ "name": "timestamp", "type": "uint256" }], "name": "getMonth", "outputs": [{ "name": "", "type": "uint8" }], "payable": false, "stateMutability": "pure", "type": "function" }, { "constant": true, "inputs": [{ "name": "timestamp", "type": "uint256" }], "name": "getSecond", "outputs": [{ "name": "", "type": "uint8" }], "payable": false, "stateMutability": "pure", "type": "function" }, { "constant": true, "inputs": [{ "name": "timestamp", "type": "uint256" }], "name": "getWeekday", "outputs": [{ "name": "", "type": "uint8" }], "payable": false, "stateMutability": "pure", "type": "function" }, { "constant": true, "inputs": [{ "name": "timestamp", "type": "uint256" }], "name": "getYear", "outputs": [{ "name": "", "type": "uint16" }], "payable": false, "stateMutability": "pure", "type": "function" }, { "constant": true, "inputs": [{ "name": "year", "type": "uint16" }], "name": "isLeapYear", "outputs": [{ "name": "", "type": "bool" }], "payable": false, "stateMutability": "pure", "type": "function" }, { "constant": true, "inputs": [{ "name": "year", "type": "uint256" }], "name": "leapYearsBefore", "outputs": [{ "name": "", "type": "uint256" }], "payable": false, "stateMutability": "pure", "type": "function" }, { "constant": true, "inputs": [{ "name": "", "type": "uint256" }], "name": "policies", "outputs": [{ "name": "policyId", "type": "uint256" }, { "name": "user", "type": "address" }, { "name": "premium", "type": "uint256" }, { "name": "area", "type": "uint256" }, { "name": "startTime", "type": "uint256" }, { "name": "endTime", "type": "uint256" }, { "name": "location", "type": "string" }, { "name": "coverageAmount", "type": "uint256" }, { "name": "forFlood", "type": "bool" }, { "name": "cropId", "type": "uint8" }, { "name": "state", "type": "uint8" }], "payable": false, "stateMutability": "view", "type": "function" }, { "constant": true, "inputs": [], "name": "resultReceived", "outputs": [{ "name": "", "type": "bool" }], "payable": false, "stateMutability": "view", "type": "function" }, { "constant": true, "inputs": [{ "name": "year", "type": "uint16" }, { "name": "month", "type": "uint8" }, { "name": "day", "type": "uint8" }, { "name": "hour", "type": "uint8" }, { "name": "minute", "type": "uint8" }], "name": "toTimestamp", "outputs": [{ "name": "timestamp", "type": "uint256" }], "payable": false, "stateMutability": "pure", "type": "function" }, { "constant": true, "inputs": [{ "name": "year", "type": "uint16" }, { "name": "month", "type": "uint8" }, { "name": "day", "type": "uint8" }, { "name": "hour", "type": "uint8" }], "name": "toTimestamp", "outputs": [{ "name": "timestamp", "type": "uint256" }], "payable": false, "stateMutability": "pure", "type": "function" }, { "constant": true, "inputs": [{ "name": "year", "type": "uint16" }, { "name": "month", "type": "uint8" }, { "name": "day", "type": "uint8" }], "name": "toTimestamp", "outputs": [{ "name": "timestamp", "type": "uint256" }], "payable": false, "stateMutability": "pure", "type": "function" }, { "constant": true, "inputs": [{ "name": "year", "type": "uint16" }, { "name": "month", "type": "uint8" }, { "name": "day", "type": "uint8" }, { "name": "hour", "type": "uint8" }, { "name": "minute", "type": "uint8" }, { "name": "second", "type": "uint8" }], "name": "toTimestamp", "outputs": [{ "name": "timestamp", "type": "uint256" }], "payable": false, "stateMutability": "pure", "type": "function" }, { "constant": true, "inputs": [{ "name": "", "type": "address" }, { "name": "", "type": "uint256" }], "name": "userPolicies", "outputs": [{ "name": "", "type": "uint256" }], "payable": false, "stateMutability": "view", "type": "function" }], '0xe01433194F20D5d6c3a4cB3F9652590F9C9A6d14');
 
-    console.log(AgrinsureContract);
+    var rabi, kharif;
 
-    AgrinsureContract.methods.policies(2).call((err, res) => {
-      console.log(res);
+    AgrinsureContract.methods.cropTypes(0).call((err, res) => {
+      rabi = res;
+    });
+    AgrinsureContract.methods.cropTypes(1).call((err, res) => {
+      kharif = res;
     });
 
-    // AgrinsureContract.methods.newPolicy(70, "dubai", 0, 1).send({ from: "0x4E04768CDD20e35EE87e6a89fC5B920f9492ffC5", value: "140", gas: GAS, gasPrice: GAS_PRICE })
-    //   .then(r => {
-    //     console.log(r);
-    //   })
+    var premiumAmount = 0;
+
+    $(document).on('change', '.changeInput', function () {
+
+      var cropId = $("input[name='crop']:checked").val();
+      var area = $('#area').val();
+
+      if (cropId == 0) {
+        premiumAmount = area * rabi.premiumPerAcre;
+      } else {
+        premiumAmount = area * kharif.premiumPerAcre;
+      }
+
+      $("#premium").val(premiumAmount);
+    })
+
+    $(document).ready(function () {
+      $("#create").click(function () {
+
+        $("#create").addClass('animated loading u-center loading-right loading-white');
+
+        var area = $('#area').val();
+        var city = $('#city').val();
+        var forFlood = $("input[name='forFlood']:checked").val();
+        var cropId = $("input[name='crop']:checked").val();
+
+
+        AgrinsureContract.methods.newPolicy(area, city, forFlood, cropId).send({ from: web3.eth.defaultAccount, value: premiumAmount, gas: GAS, gasPrice: GAS_PRICE })
+          .then(r => {
+            console.log(r);
+            $("#create").removeClass('animated loading u-center loading-right loading-white');
+            $("#create").text("Policy Created!");
+          })
+      });
+    });
+
   </script>
 
   <script>
