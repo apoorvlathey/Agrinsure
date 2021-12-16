@@ -1,154 +1,182 @@
 <!DOCTYPE html>
 <html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <link href="https://unpkg.com/cirrus-ui" type="text/css" rel="stylesheet" />
+    <title>FarmInsure | HomePage</title>
+    <link
+      href="https://fonts.googleapis.com/css?family=Nunito+Sans:200,300,400,600,700"
+      rel="stylesheet"
+    />
+    <link
+      href="https://fonts.googleapis.com/css?family=Montserrat:400,700"
+      rel="stylesheet"
+    />
 
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta http-equiv="X-UA-Compatible" content="ie=edge">
-  <link href="https://unpkg.com/cirrus-ui" type="text/css" rel="stylesheet" />
-  <title>Agrinsure | HomePage</title>
-  <link href="https://fonts.googleapis.com/css?family=Nunito+Sans:200,300,400,600,700" rel="stylesheet">
-  <link href="https://fonts.googleapis.com/css?family=Montserrat:400,700" rel="stylesheet">
+    <link
+      rel="stylesheet"
+      href="https://use.fontawesome.com/releases/v5.2.0/css/all.css"
+      integrity="sha384-hWVjflwFxL6sNzntih27bfxkr27PmbbK/iSvJ+a4+0owXq79v+lsFkW54bOGbiDQ"
+      crossorigin="anonymous"
+    />
 
-  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.2.0/css/all.css"
-    integrity="sha384-hWVjflwFxL6sNzntih27bfxkr27PmbbK/iSvJ+a4+0owXq79v+lsFkW54bOGbiDQ" crossorigin="anonymous">
+    <script
+      src="https://code.jquery.com/jquery-2.2.4.min.js"
+      integrity="sha256-BbhdlvQf/xTY9gja0Dq3HiwQF8LaCRTXxZKRutelT44="
+      crossorigin="anonymous"
+    ></script>
 
-  <script src="https://code.jquery.com/jquery-2.2.4.min.js"
-    integrity="sha256-BbhdlvQf/xTY9gja0Dq3HiwQF8LaCRTXxZKRutelT44=" crossorigin="anonymous"></script>
+    <style>
+      .header-clear-mod a {
+        color: #fff;
+      }
 
-  <style>
-    .header-clear-mod a {
-      color: #fff;
-    }
+      #splash-img {
+        background: url("./img/splashLeaves.jpg");
+        background-size: cover;
+        background-repeat: no-repeat;
+      }
 
-    #splash-img {
-      background: url("./img/splashLeaves.jpg");
-      background-size: cover;
-      background-repeat: no-repeat;
-    }
+      #fade {
+        background-image: linear-gradient(
+          to bottom,
+          rgba(255, 255, 255, 0.0001),
+          #fff
+        );
+        bottom: 0;
+        height: 175px;
+        left: 0;
+        right: 0;
+        opacity: 0;
+        position: absolute;
+        transition: all 0.3s;
+      }
 
-    #fade {
-      background-image: linear-gradient(to bottom, rgba(255, 255, 255, 0.0001), #fff);
-      bottom: 0;
-      height: 175px;
-      left: 0;
-      right: 0;
-      opacity: 0;
-      position: absolute;
-      transition: all .3s;
-    }
+      #fade.faded {
+        opacity: 1;
+        transition: all 0.3s;
+      }
+    </style>
+  </head>
 
-    #fade.faded {
-      opacity: 1;
-      transition: all .3s;
-    }
-  </style>
-</head>
-
-<body>
-
-  <div id="header" class="header header-top header-fixed unselectable header-animated header-clear-mod header-clear">
-    <div class="header-brand">
-      <div class="nav-item no-hover">
-        <a href="./index.html">
-          <h5 class="title"><i class="fas fa-wrapper fa-leaf small"></i> Agrinsure</h5>
-        </a>
-      </div>
-      <div class="nav-item nav-btn" id="header-btn">
-        <span></span>
-        <span></span>
-        <span></span>
-      </div>
-    </div>
-    <div class="header-nav" id="header-menu">
-
-      <div class="nav-right">
-        <div class="nav-item">
-          <a class="smoothScroll" href="">
-            <span class="icon">
-              <i class="fas fa-wrapper fa-cog small"></i>
-            </span>
-            How it Works?
+  <body>
+    <div
+      id="header"
+      class="
+        header header-top header-fixed
+        unselectable
+        header-animated header-clear-mod header-clear
+      "
+    >
+      <div class="header-brand">
+        <div class="nav-item no-hover">
+          <a href="./index.html">
+            <h5 class="title"
+              ><i class="fas fa-wrapper fa-leaf small"></i> FarmInsure</h5
+            >
           </a>
         </div>
-        <div class="nav-item">
-          <a href="./viewPolicies.html">
-            <span class="icon">
-              <i class="fas fa-wrapper fa-boxes small"></i>
-            </span>
-            View Policies
-          </a>
+        <div class="nav-item nav-btn" id="header-btn">
+          <span></span>
+          <span></span>
+          <span></span>
         </div>
-        <div class="nav-item has-sub" style="padding: 0.5rem;">
-          <div class="list-dropdown dropdown-right">
-            <div class="btn-group">
-              <button class="btn-success u-no-padding">
-                <a class="font-normal" href="./claim.html" target="_blank">
-                  <span>Claim Insurance</span>
-                </a>
-              </button>
+      </div>
+      <div class="header-nav" id="header-menu">
+        <div class="nav-right">
+          <div class="nav-item">
+            <a class="smoothScroll" href="">
+              <span class="icon">
+                <i class="fas fa-wrapper fa-cog small"></i>
+              </span>
+              How it Works?
+            </a>
+          </div>
+          <div class="nav-item">
+            <a href="./viewPolicies.html">
+              <span class="icon">
+                <i class="fas fa-wrapper fa-boxes small"></i>
+              </span>
+              View Policies
+            </a>
+          </div>
+          <div class="nav-item has-sub" style="padding: 0.5rem">
+            <div class="list-dropdown dropdown-right">
+              <div class="btn-group">
+                <button class="btn-success u-no-padding">
+                  <a class="font-normal" href="./claim.html" target="_blank">
+                    <span>Claim Insurance</span>
+                  </a>
+                </button>
+              </div>
             </div>
           </div>
         </div>
       </div>
     </div>
-  </div>
 
-  <section id="splash">
-    <div id="splash-img" class="hero fullscreen hero-img parallax-img">
-      <div id="hero-body" class="hero-body">
-        <div class="content u-text-center">
-          <h5 class="uppercase white sub-title">Decentralized Crop Insurance against Floods and Droughts</h5>
-          <h1 class="headline-1 white title">Agrinsure</h1>
+    <section id="splash">
+      <div id="splash-img" class="hero fullscreen hero-img parallax-img">
+        <div id="hero-body" class="hero-body">
+          <div class="content u-text-center">
+            <h5 class="uppercase white sub-title"
+              >Decentralized Crop Insurance against Floods and Droughts</h5
+            >
+            <h1 class="headline-1 white title">FarmInsure</h1>
 
-          <p class="white"><b>No Middle-man, Guaranteed Payouts</b></p>
+            <p class="white"><b>No Middle-man, Guaranteed Payouts</b></p>
 
-          <a href="./newPolicy.html" class="u-inline-block">
-            <button class="btn-light outline" style="border: 1px solid limegreen">
-              Create Policy
-            </button>
-          </a>
+            <a href="./newPolicy.html" class="u-inline-block">
+              <button
+                class="btn-light outline"
+                style="border: 1px solid limegreen"
+              >
+                Create Policy
+              </button>
+            </a>
+          </div>
         </div>
+        <div id="fade"></div>
       </div>
-      <div id="fade"></div>
-    </div>
-  </section>
+    </section>
 
-  <section id="intro" class="padtop">
-    <div class="content u-text-center">
-      <h6 class="uppercase font-bold">Developed By
-        <a href="https://apoorvlathey.com"><span style="color: var(--cirrus-success);">Apoorv Lathey</span></a>
-      </h6>
-    </div>
-  </section>
+    <section id="intro" class="padtop">
+      <div class="content u-text-center">
+        <h6 class="uppercase font-bold"
+          >Developed By
+          <a href="https://apoorvlathey.com"
+            ><span style="color: var(--cirrus-success)">Apoorv Lathey</span></a
+          >
+        </h6>
+      </div>
+    </section>
 
-
-  <script>
-    $(document).ready(function () {
-
-      if ($(window).scrollTop() >= 120) {
-        $('#header').addClass('header-dark');
-        $('#header').removeClass('header-clear-mod');
-      } else {
-        $('#header').addClass('header-clear-mod');
-        $('#header').removeClass('header-dark');
-      }
-
-      $(window).scroll(function () {
+    <script>
+      $(document).ready(function () {
         if ($(window).scrollTop() >= 120) {
-          $('#header').addClass('header-dark');
-          $('#header').removeClass('header-clear-mod');
-          $('#header').removeClass('header-clear');
-          $('#fade').addClass('faded');
+          $("#header").addClass("header-dark");
+          $("#header").removeClass("header-clear-mod");
         } else {
-          $('#header').addClass('header-clear-mod');
-          $('#header').addClass('header-clear');
-          $('#header').removeClass('header-dark');
-          $('#fade').removeClass('faded');
+          $("#header").addClass("header-clear-mod");
+          $("#header").removeClass("header-dark");
         }
-      });
-    });
-  </script>
-</body>
 
+        $(window).scroll(function () {
+          if ($(window).scrollTop() >= 120) {
+            $("#header").addClass("header-dark");
+            $("#header").removeClass("header-clear-mod");
+            $("#header").removeClass("header-clear");
+            $("#fade").addClass("faded");
+          } else {
+            $("#header").addClass("header-clear-mod");
+            $("#header").addClass("header-clear");
+            $("#header").removeClass("header-dark");
+            $("#fade").removeClass("faded");
+          }
+        });
+      });
+    </script>
+  </body>
 </html>

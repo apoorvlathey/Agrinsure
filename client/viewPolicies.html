@@ -1,507 +1,817 @@
 <!DOCTYPE html>
 <html>
-<header>
-  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0">
+  <header>
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0"
+    />
 
-  <link href="https://unpkg.com/cirrus-ui" type="text/css" rel="stylesheet" />
-  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css"
-    integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf" crossorigin="anonymous">
+    <link href="https://unpkg.com/cirrus-ui" type="text/css" rel="stylesheet" />
+    <link
+      rel="stylesheet"
+      href="https://use.fontawesome.com/releases/v5.8.1/css/all.css"
+      integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf"
+      crossorigin="anonymous"
+    />
 
-  <script src="./js/web3.min.js"></script>
+    <script src="./js/web3.min.js"></script>
 
-  <link href="https://fonts.googleapis.com/css?family=Nunito+Sans:200,300,400,600,700" rel="stylesheet">
-  <link href="https://fonts.googleapis.com/css?family=Montserrat:400,700" rel="stylesheet">
-  <script src="https://code.jquery.com/jquery-2.2.4.min.js"
-    integrity="sha256-BbhdlvQf/xTY9gja0Dq3HiwQF8LaCRTXxZKRutelT44=" crossorigin="anonymous"></script>
+    <link
+      href="https://fonts.googleapis.com/css?family=Nunito+Sans:200,300,400,600,700"
+      rel="stylesheet"
+    />
+    <link
+      href="https://fonts.googleapis.com/css?family=Montserrat:400,700"
+      rel="stylesheet"
+    />
+    <script
+      src="https://code.jquery.com/jquery-2.2.4.min.js"
+      integrity="sha256-BbhdlvQf/xTY9gja0Dq3HiwQF8LaCRTXxZKRutelT44="
+      crossorigin="anonymous"
+    ></script>
 
-  <style>
-    #splash-img {
-      background: url('https://images.unsplash.com/photo-1508182314998-3bd49473002f?ixlib=rb-0.3.5&s=f8ac09c936bac8105fde945ea267da65&auto=format&fit=crop&w=2560&q=100');
-      background-size: cover;
-      background-repeat: no-repeat;
-    }
-
-    #hero-body {
-      background-color: rgba(0, 0, 0, 0.2);
-    }
-
-    #fade {
-      background-image: linear-gradient(to bottom, rgba(255, 255, 255, 0.0001), #fff);
-      bottom: 0;
-      height: 175px;
-      left: 0;
-      right: 0;
-      opacity: 0;
-      position: absolute;
-      transition: all .3s;
-    }
-
-    #fade.faded {
-      opacity: 1;
-      transition: all .3s;
-    }
-
-    .padtop {
-      padding-top: 4rem;
-    }
-
-    .header {
-      transition: all .3s;
-    }
-
-    .header-clear-mod {
-      background-color: transparent;
-      box-shadow: none;
-      opacity: 0.9;
-      padding: 1.5rem;
-    }
-
-    .header-fill {
-      background-color: rgba(0, 0, 0, 0.87);
-    }
-
-    .translucent {
-      background: rgba(0, 0, 0, 0.87);
-    }
-
-    .header-clear-mod a {
-      color: #fff;
-    }
-
-    .header .nav-item button a:hover {
-      color: #fff;
-    }
-
-    .header .nav-item a .icon {
-      font-size: inherit;
-    }
-
-    .header .btn .btn-accent {
-      position: inherit;
-    }
-
-    section {
-      padding-bottom: 2rem;
-    }
-
-    .content h6 {
-      line-height: 2.25rem;
-    }
-
-    .font-normal {
-      font-weight: 400;
-    }
-
-    pre:not(.get-cirrus)>code {
-      padding: 1.5rem 1.5rem 1rem !important;
-      background: #f6f8fa;
-    }
-
-    .hljs {
-      max-height: 750px;
-    }
-
-    /* Colors */
-    .frame {
-      box-shadow: 0 0.2rem 1.25rem 0 rgba(27, 30, 36, 0.07);
-      margin: 1rem 0;
-    }
-
-    .color-panel {
-      transition-duration: 86ms;
-    }
-
-    .color-panel:hover {
-      box-shadow: 0 3rem 3rem -1.25rem rgba(10, 10, 10, .1);
-      -webkit-transform: translateY(-.5rem);
-      transform: translateY(-.5rem);
-    }
-
-    /* Fonts */
-    .desc {
-      font-size: 11px;
-      font-family: 'Nunito Sans';
-      margin-left: 10px;
-      vertical-align: bottom;
-    }
-
-    .frame h2 {
-      word-break: break-all;
-    }
-
-    /* Buttons */
-    .btn-primary.hover,
-    .btn-primary.focus {
-      background-color: #d62939;
-    }
-
-    .btn-primary.focus {
-      box-shadow: 0 0 0 0.2rem rgba(240, 61, 76, .5)
-    }
-
-    ._shadow {
-      box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
-    }
-
-    /* Checkboxes */
-    .form-ext-control {
-      margin-bottom: 0.75rem;
-    }
-
-    /* Tooltips */
-    #tooltips button {
-      text-align: center;
-    }
-
-    .doc-link {
-      font-weight: 300;
-      margin-right: .5rem;
-    }
-
-    /* Layout */
-    #grids .col>div,
-    #grids [class^='col-']>div,
-    #grids [class*=" col-"]>div,
-    #grids .col>div,
-    #grids [class^='w-']>div,
-    #grids [class*=" w-"]>div,
-    #grids [class^='h-']>div,
-    #grids [class*=" h-"]>div {
-      background: #eee;
-      text-align: center;
-      border-radius: 5px;
-      font-size: .7rem;
-      text-transform: uppercase;
-      min-height: 30px !important;
-      line-height: 30px;
-      margin-bottom: .75rem;
-      font-weight: bold;
-      letter-spacing: .1rem;
-    }
-
-    #grids [class^='h-']>div,
-    #grids [class*=" h-"]>div {
-      height: 100%;
-    }
-
-    /* Examples */
-    #examples {
-      background-color: #1c222b;
-    }
-
-    /* Footer */
-    footer ul a {
-      display: block;
-    }
-
-    footer h3 {
-      letter-spacing: 6px;
-    }
-
-    footer .divider {
-      background: rgba(238, 238, 238, 0.2);
-      height: 1px;
-    }
-
-    footer p .fa.fa-heart {
-      color: #E90606;
-      margin: 0 3px;
-      animation: pound 0.35s infinite alternate;
-      -webkit-animation: pound 0.35s infinite alternate;
-      vertical-align: baseline;
-    }
-
-    /* Documentation Page */
-    .flex-wrap {
-      display: flex;
-      flex-wrap: wrap;
-    }
-
-    .doc-tile {
-      border-radius: .25rem;
-      color: var(--cirrus-fg);
-      cursor: pointer;
-      height: 100%;
-      padding: 2.5rem 2rem;
-      transition: all .2s;
-      user-select: none;
-    }
-
-    .col-6 a:focus {
-      box-shadow: none;
-    }
-
-    .doc-tile .lead {
-      font-size: 1.175rem;
-      line-height: 2rem;
-      margin-top: .5rem;
-    }
-
-    .doc-tile:hover {
-      background-color: rgba(0, 0, 0, .05);
-      color: #3273dc;
-      transition: all .2s;
-    }
-
-    .doc-tile:active {
-      background-color: rgba(0, 0, 0, .10);
-      color: #3273dc;
-      transform: scale(.98);
-    }
-
-    .demo-tooltip {
-      width: 100%;
-    }
-
-    /* Colors */
-    .color-circle {
-      border-radius: 50%;
-      margin: .5rem;
-      padding: 1rem;
-    }
-
-    pre.get-cirrus {
-      display: -webkit-box;
-      display: -ms-flexbox;
-      display: flex;
-      justify-content: space-between;
-      border-radius: .3rem;
-      background: var(--cirrus-dark) !important;
-      margin: 1rem 0;
-    }
-
-    pre.get-cirrus code {
-      padding: 1rem;
-    }
-
-    /* Copy button */
-    pre .copy {
-      margin: auto 1rem;
-      color: #f03d4d;
-      padding: 0.25rem 0.75rem;
-      border-radius: .3rem;
-      font-weight: 700;
-      box-sizing: border-box;
-      user-select: none;
-      cursor: pointer;
-      transition: all .2s;
-    }
-
-    pre .copy:hover {
-      background: #f03d4d;
-      color: #fff;
-      transition: all .2s;
-    }
-
-    /* Grid */
-    ._grid-ex {
-      background-color: #eee;
-      border-radius: .25rem;
-      font-weight: bold;
-      text-align: center;
-    }
-
-    @media (max-width: 768px) {
-      .nav-item.has-sub .list-dropdown .btn-group button:not(.btn-dropdown) {
-        flex-grow: 1;
+    <style>
+      #splash-img {
+        background: url("https://images.unsplash.com/photo-1508182314998-3bd49473002f?ixlib=rb-0.3.5&s=f8ac09c936bac8105fde945ea267da65&auto=format&fit=crop&w=2560&q=100");
+        background-size: cover;
+        background-repeat: no-repeat;
       }
-    }
-  </style>
-</header>
 
-<body>
+      #hero-body {
+        background-color: rgba(0, 0, 0, 0.2);
+      }
 
-  <div id="header" class="header header-top header-fixed unselectable">
-    <div class="header-brand">
-      <div class="nav-item no-hover">
-        <a href="./index.html">
-          <h5 class="title"><i class="fas fa-wrapper fa-leaf small"></i> Agrinsure</h5>
-        </a>
-      </div>
-      <div class="nav-item nav-btn" id="header-btn">
-        <span></span>
-        <span></span>
-        <span></span>
-      </div>
-    </div>
-    <div class="header-nav" id="header-menu">
+      #fade {
+        background-image: linear-gradient(
+          to bottom,
+          rgba(255, 255, 255, 0.0001),
+          #fff
+        );
+        bottom: 0;
+        height: 175px;
+        left: 0;
+        right: 0;
+        opacity: 0;
+        position: absolute;
+        transition: all 0.3s;
+      }
 
-      <div class="nav-right">
-        <div class="nav-item">
-          <a class="smoothScroll" href="">
-            <span class="icon">
-              <i class="fas fa-wrapper fa-cog small"></i>
-            </span>
-            How it Works?
+      #fade.faded {
+        opacity: 1;
+        transition: all 0.3s;
+      }
+
+      .padtop {
+        padding-top: 4rem;
+      }
+
+      .header {
+        transition: all 0.3s;
+      }
+
+      .header-clear-mod {
+        background-color: transparent;
+        box-shadow: none;
+        opacity: 0.9;
+        padding: 1.5rem;
+      }
+
+      .header-fill {
+        background-color: rgba(0, 0, 0, 0.87);
+      }
+
+      .translucent {
+        background: rgba(0, 0, 0, 0.87);
+      }
+
+      .header-clear-mod a {
+        color: #fff;
+      }
+
+      .header .nav-item button a:hover {
+        color: #fff;
+      }
+
+      .header .nav-item a .icon {
+        font-size: inherit;
+      }
+
+      .header .btn .btn-accent {
+        position: inherit;
+      }
+
+      section {
+        padding-bottom: 2rem;
+      }
+
+      .content h6 {
+        line-height: 2.25rem;
+      }
+
+      .font-normal {
+        font-weight: 400;
+      }
+
+      pre:not(.get-cirrus) > code {
+        padding: 1.5rem 1.5rem 1rem !important;
+        background: #f6f8fa;
+      }
+
+      .hljs {
+        max-height: 750px;
+      }
+
+      /* Colors */
+      .frame {
+        box-shadow: 0 0.2rem 1.25rem 0 rgba(27, 30, 36, 0.07);
+        margin: 1rem 0;
+      }
+
+      .color-panel {
+        transition-duration: 86ms;
+      }
+
+      .color-panel:hover {
+        box-shadow: 0 3rem 3rem -1.25rem rgba(10, 10, 10, 0.1);
+        -webkit-transform: translateY(-0.5rem);
+        transform: translateY(-0.5rem);
+      }
+
+      /* Fonts */
+      .desc {
+        font-size: 11px;
+        font-family: "Nunito Sans";
+        margin-left: 10px;
+        vertical-align: bottom;
+      }
+
+      .frame h2 {
+        word-break: break-all;
+      }
+
+      /* Buttons */
+      .btn-primary.hover,
+      .btn-primary.focus {
+        background-color: #d62939;
+      }
+
+      .btn-primary.focus {
+        box-shadow: 0 0 0 0.2rem rgba(240, 61, 76, 0.5);
+      }
+
+      ._shadow {
+        box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+      }
+
+      /* Checkboxes */
+      .form-ext-control {
+        margin-bottom: 0.75rem;
+      }
+
+      /* Tooltips */
+      #tooltips button {
+        text-align: center;
+      }
+
+      .doc-link {
+        font-weight: 300;
+        margin-right: 0.5rem;
+      }
+
+      /* Layout */
+      #grids .col > div,
+      #grids [class^="col-"] > div,
+      #grids [class*=" col-"] > div,
+      #grids .col > div,
+      #grids [class^="w-"] > div,
+      #grids [class*=" w-"] > div,
+      #grids [class^="h-"] > div,
+      #grids [class*=" h-"] > div {
+        background: #eee;
+        text-align: center;
+        border-radius: 5px;
+        font-size: 0.7rem;
+        text-transform: uppercase;
+        min-height: 30px !important;
+        line-height: 30px;
+        margin-bottom: 0.75rem;
+        font-weight: bold;
+        letter-spacing: 0.1rem;
+      }
+
+      #grids [class^="h-"] > div,
+      #grids [class*=" h-"] > div {
+        height: 100%;
+      }
+
+      /* Examples */
+      #examples {
+        background-color: #1c222b;
+      }
+
+      /* Footer */
+      footer ul a {
+        display: block;
+      }
+
+      footer h3 {
+        letter-spacing: 6px;
+      }
+
+      footer .divider {
+        background: rgba(238, 238, 238, 0.2);
+        height: 1px;
+      }
+
+      footer p .fa.fa-heart {
+        color: #e90606;
+        margin: 0 3px;
+        animation: pound 0.35s infinite alternate;
+        -webkit-animation: pound 0.35s infinite alternate;
+        vertical-align: baseline;
+      }
+
+      /* Documentation Page */
+      .flex-wrap {
+        display: flex;
+        flex-wrap: wrap;
+      }
+
+      .doc-tile {
+        border-radius: 0.25rem;
+        color: var(--cirrus-fg);
+        cursor: pointer;
+        height: 100%;
+        padding: 2.5rem 2rem;
+        transition: all 0.2s;
+        user-select: none;
+      }
+
+      .col-6 a:focus {
+        box-shadow: none;
+      }
+
+      .doc-tile .lead {
+        font-size: 1.175rem;
+        line-height: 2rem;
+        margin-top: 0.5rem;
+      }
+
+      .doc-tile:hover {
+        background-color: rgba(0, 0, 0, 0.05);
+        color: #3273dc;
+        transition: all 0.2s;
+      }
+
+      .doc-tile:active {
+        background-color: rgba(0, 0, 0, 0.1);
+        color: #3273dc;
+        transform: scale(0.98);
+      }
+
+      .demo-tooltip {
+        width: 100%;
+      }
+
+      /* Colors */
+      .color-circle {
+        border-radius: 50%;
+        margin: 0.5rem;
+        padding: 1rem;
+      }
+
+      pre.get-cirrus {
+        display: -webkit-box;
+        display: -ms-flexbox;
+        display: flex;
+        justify-content: space-between;
+        border-radius: 0.3rem;
+        background: var(--cirrus-dark) !important;
+        margin: 1rem 0;
+      }
+
+      pre.get-cirrus code {
+        padding: 1rem;
+      }
+
+      /* Copy button */
+      pre .copy {
+        margin: auto 1rem;
+        color: #f03d4d;
+        padding: 0.25rem 0.75rem;
+        border-radius: 0.3rem;
+        font-weight: 700;
+        box-sizing: border-box;
+        user-select: none;
+        cursor: pointer;
+        transition: all 0.2s;
+      }
+
+      pre .copy:hover {
+        background: #f03d4d;
+        color: #fff;
+        transition: all 0.2s;
+      }
+
+      /* Grid */
+      ._grid-ex {
+        background-color: #eee;
+        border-radius: 0.25rem;
+        font-weight: bold;
+        text-align: center;
+      }
+
+      @media (max-width: 768px) {
+        .nav-item.has-sub .list-dropdown .btn-group button:not(.btn-dropdown) {
+          flex-grow: 1;
+        }
+      }
+    </style>
+  </header>
+
+  <body>
+    <div id="header" class="header header-top header-fixed unselectable">
+      <div class="header-brand">
+        <div class="nav-item no-hover">
+          <a href="./index.html">
+            <h5 class="title"
+              ><i class="fas fa-wrapper fa-leaf small"></i> FarmInsure</h5
+            >
           </a>
         </div>
-        <div class="nav-item">
-          <a href="./viewPolicies.html">
-            <span class="icon">
-              <i class="fas fa-wrapper fa-boxes small"></i>
-            </span>
-            View Policies
-          </a>
+        <div class="nav-item nav-btn" id="header-btn">
+          <span></span>
+          <span></span>
+          <span></span>
         </div>
-        <div class="nav-item has-sub" style="padding: 0.5rem;">
-          <div class="list-dropdown dropdown-right">
-            <div class="btn-group">
-              <button class="btn-success u-no-padding">
-                <a class="font-normal" href="./claim.html" target="_blank">
-                  <span style="color: white;">Claim Insurance</span>
-                </a>
-              </button>
-            </div>
+      </div>
+      <div class="header-nav" id="header-menu">
+        <div class="nav-right">
+          <div class="nav-item">
+            <a class="smoothScroll" href="">
+              <span class="icon">
+                <i class="fas fa-wrapper fa-cog small"></i>
+              </span>
+              How it Works?
+            </a>
           </div>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <div class="hero fullscreen" style="margin-top: 3.5em;">
-    <div class="row u-no-padding">
-      <div class="col-12 u-no-padding level">
-        <div class="u-text-left w-100">
-          <div class="content">
-            <h4>View your Policies</h4>
-
-            <div class="divider"></div>
-
-            <div class="form-section">
-              <label class="font-semibold">Enter Policy ID:</label>
-              <div class="input-control">
-                <input class="input-contains-icon" id="policyId" name="area" placeholder="Policy ID" type="text"
-                  value="">
-              </div>
-            </div>
-
-            <div class="form-section u-text-center">
-              <div class="btn-container u-inline-block">
-                <button class="btn-success" id="create">
-                  - View -
+          <div class="nav-item">
+            <a href="./viewPolicies.html">
+              <span class="icon">
+                <i class="fas fa-wrapper fa-boxes small"></i>
+              </span>
+              View Policies
+            </a>
+          </div>
+          <div class="nav-item has-sub" style="padding: 0.5rem">
+            <div class="list-dropdown dropdown-right">
+              <div class="btn-group">
+                <button class="btn-success u-no-padding">
+                  <a class="font-normal" href="./claim.html" target="_blank">
+                    <span style="color: white">Claim Insurance</span>
+                  </a>
                 </button>
               </div>
             </div>
-
-            <table class="table">
-              <thead>
-                <tr>
-                  <th>User Address</th>
-                  <th>Area</th>
-                  <th>Crop</th>
-                  <th>Type</th>
-                  <th>Valid Till</th>
-                </tr>
-              </thead>
-
-              <tbody>
-                <tr>
-                  <th>0x4E04768CDD20e35EE87e6a89fC5B920f9492ffC5</th>
-                  <td>543</td>
-                  <td>Kharif</td>
-                  <td>Flood</td>
-                  <td>06-June-2020</td>
-                </tr>
-              </tbody>
-            </table>
-
           </div>
         </div>
       </div>
-      <!-- <div class="col-6 u-no-padding">
+    </div>
+
+    <div class="hero fullscreen" style="margin-top: 3.5em">
+      <div class="row u-no-padding">
+        <div class="col-12 u-no-padding level">
+          <div class="u-text-left w-100">
+            <div class="content">
+              <h4>View your Policies</h4>
+
+              <div class="divider"></div>
+
+              <div class="form-section">
+                <label class="font-semibold">Enter Policy ID:</label>
+                <div class="input-control">
+                  <input
+                    class="input-contains-icon"
+                    id="policyId"
+                    name="area"
+                    placeholder="Policy ID"
+                    type="text"
+                    value=""
+                  />
+                </div>
+              </div>
+
+              <div class="form-section u-text-center">
+                <div class="btn-container u-inline-block">
+                  <button class="btn-success" id="create"> - View - </button>
+                </div>
+              </div>
+
+              <table class="table">
+                <thead>
+                  <tr>
+                    <th>User Address</th>
+                    <th>Area</th>
+                    <th>Crop</th>
+                    <th>Type</th>
+                    <th>Valid Till</th>
+                  </tr>
+                </thead>
+
+                <tbody>
+                  <tr>
+                    <th>0x4E04768CDD20e35EE87e6a89fC5B920f9492ffC5</th>
+                    <td>543</td>
+                    <td>Kharif</td>
+                    <td>Flood</td>
+                    <td>06-June-2020</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+        <!-- <div class="col-6 u-no-padding">
         <div class="h-100"
           style="background: url('./img/splashLeaves.jpg'); background-size: cover; background-position: center; box-shadow: inset 5px 0px 9px 1px #00000017; min-height: 300px;">
         </div>
       </div> -->
+      </div>
     </div>
-  </div>
 
-  <script>
-    const GAS = 500000;
-    const GAS_PRICE = "20000000000";
+    <script>
+      const GAS = 500000;
+      const GAS_PRICE = "20000000000";
 
-    if (window.ethereum) {
-      window.web3 = new Web3(ethereum);
-      try {
-        // Request account access if needed
-        ethereum.enable();
-        // Acccounts now exposed
-      } catch (error) {
-        // User denied account access...
+      if (window.ethereum) {
+        window.web3 = new Web3(ethereum);
+        try {
+          // Request account access if needed
+          ethereum.enable();
+          // Acccounts now exposed
+        } catch (error) {
+          // User denied account access...
+        }
       }
-    }
-    // Legacy dapp browsers...
-    else if (window.web3) {
-      window.web3 = new Web3(web3.currentProvider);
-      // Acccounts always exposed
-    }
-    // Non-dapp browsers...
-    else {
-      console.log('Non-Ethereum browser detected. You should consider trying MetaMask!');
-    }
+      // Legacy dapp browsers...
+      else if (window.web3) {
+        window.web3 = new Web3(web3.currentProvider);
+        // Acccounts always exposed
+      }
+      // Non-dapp browsers...
+      else {
+        console.log(
+          "Non-Ethereum browser detected. You should consider trying MetaMask!"
+        );
+      }
 
-    var AgrinsureContract = new web3.eth.Contract([{ "constant": false, "inputs": [{ "name": "_policyId", "type": "uint256" }, { "name": "_timestamp", "type": "uint256" }], "name": "claim", "outputs": [], "payable": false, "stateMutability": "nonpayable", "type": "function" }, { "constant": false, "inputs": [{ "name": "_requestId", "type": "bytes32" }, { "name": "_result", "type": "int256" }], "name": "fulfill", "outputs": [], "payable": false, "stateMutability": "nonpayable", "type": "function" }, { "constant": false, "inputs": [{ "name": "_area", "type": "uint256" }, { "name": "_location", "type": "string" }, { "name": "_forFlood", "type": "bool" }, { "name": "_cropId", "type": "uint8" }], "name": "newPolicy", "outputs": [], "payable": true, "stateMutability": "payable", "type": "function" }, { "inputs": [{ "name": "_link", "type": "address" }, { "name": "_oracle", "type": "address" }, { "name": "_jobId", "type": "bytes32" }, { "name": "_oraclePaymentAmount", "type": "uint256" }], "payable": false, "stateMutability": "nonpayable", "type": "constructor" }, { "payable": true, "stateMutability": "payable", "type": "fallback" }, { "anonymous": false, "inputs": [{ "indexed": true, "name": "id", "type": "bytes32" }], "name": "ChainlinkRequested", "type": "event" }, { "anonymous": false, "inputs": [{ "indexed": true, "name": "id", "type": "bytes32" }], "name": "ChainlinkFulfilled", "type": "event" }, { "anonymous": false, "inputs": [{ "indexed": true, "name": "id", "type": "bytes32" }], "name": "ChainlinkCancelled", "type": "event" }, { "constant": true, "inputs": [{ "name": "", "type": "uint256" }], "name": "cropTypes", "outputs": [{ "name": "name", "type": "string" }, { "name": "premiumPerAcre", "type": "uint256" }, { "name": "duration", "type": "uint256" }, { "name": "coveragePerAcre", "type": "uint256" }], "payable": false, "stateMutability": "view", "type": "function" }, { "constant": true, "inputs": [{ "name": "timestamp", "type": "uint256" }], "name": "getDay", "outputs": [{ "name": "", "type": "uint8" }], "payable": false, "stateMutability": "pure", "type": "function" }, { "constant": true, "inputs": [{ "name": "month", "type": "uint8" }, { "name": "year", "type": "uint16" }], "name": "getDaysInMonth", "outputs": [{ "name": "", "type": "uint8" }], "payable": false, "stateMutability": "pure", "type": "function" }, { "constant": true, "inputs": [{ "name": "timestamp", "type": "uint256" }], "name": "getHour", "outputs": [{ "name": "", "type": "uint8" }], "payable": false, "stateMutability": "pure", "type": "function" }, { "constant": true, "inputs": [{ "name": "timestamp", "type": "uint256" }], "name": "getMinute", "outputs": [{ "name": "", "type": "uint8" }], "payable": false, "stateMutability": "pure", "type": "function" }, { "constant": true, "inputs": [{ "name": "timestamp", "type": "uint256" }], "name": "getMonth", "outputs": [{ "name": "", "type": "uint8" }], "payable": false, "stateMutability": "pure", "type": "function" }, { "constant": true, "inputs": [{ "name": "timestamp", "type": "uint256" }], "name": "getSecond", "outputs": [{ "name": "", "type": "uint8" }], "payable": false, "stateMutability": "pure", "type": "function" }, { "constant": true, "inputs": [{ "name": "timestamp", "type": "uint256" }], "name": "getWeekday", "outputs": [{ "name": "", "type": "uint8" }], "payable": false, "stateMutability": "pure", "type": "function" }, { "constant": true, "inputs": [{ "name": "timestamp", "type": "uint256" }], "name": "getYear", "outputs": [{ "name": "", "type": "uint16" }], "payable": false, "stateMutability": "pure", "type": "function" }, { "constant": true, "inputs": [{ "name": "year", "type": "uint16" }], "name": "isLeapYear", "outputs": [{ "name": "", "type": "bool" }], "payable": false, "stateMutability": "pure", "type": "function" }, { "constant": true, "inputs": [{ "name": "year", "type": "uint256" }], "name": "leapYearsBefore", "outputs": [{ "name": "", "type": "uint256" }], "payable": false, "stateMutability": "pure", "type": "function" }, { "constant": true, "inputs": [{ "name": "", "type": "uint256" }], "name": "policies", "outputs": [{ "name": "policyId", "type": "uint256" }, { "name": "user", "type": "address" }, { "name": "premium", "type": "uint256" }, { "name": "area", "type": "uint256" }, { "name": "startTime", "type": "uint256" }, { "name": "endTime", "type": "uint256" }, { "name": "location", "type": "string" }, { "name": "coverageAmount", "type": "uint256" }, { "name": "forFlood", "type": "bool" }, { "name": "cropId", "type": "uint8" }, { "name": "state", "type": "uint8" }], "payable": false, "stateMutability": "view", "type": "function" }, { "constant": true, "inputs": [], "name": "resultReceived", "outputs": [{ "name": "", "type": "bool" }], "payable": false, "stateMutability": "view", "type": "function" }, { "constant": true, "inputs": [{ "name": "year", "type": "uint16" }, { "name": "month", "type": "uint8" }, { "name": "day", "type": "uint8" }, { "name": "hour", "type": "uint8" }, { "name": "minute", "type": "uint8" }], "name": "toTimestamp", "outputs": [{ "name": "timestamp", "type": "uint256" }], "payable": false, "stateMutability": "pure", "type": "function" }, { "constant": true, "inputs": [{ "name": "year", "type": "uint16" }, { "name": "month", "type": "uint8" }, { "name": "day", "type": "uint8" }, { "name": "hour", "type": "uint8" }], "name": "toTimestamp", "outputs": [{ "name": "timestamp", "type": "uint256" }], "payable": false, "stateMutability": "pure", "type": "function" }, { "constant": true, "inputs": [{ "name": "year", "type": "uint16" }, { "name": "month", "type": "uint8" }, { "name": "day", "type": "uint8" }], "name": "toTimestamp", "outputs": [{ "name": "timestamp", "type": "uint256" }], "payable": false, "stateMutability": "pure", "type": "function" }, { "constant": true, "inputs": [{ "name": "year", "type": "uint16" }, { "name": "month", "type": "uint8" }, { "name": "day", "type": "uint8" }, { "name": "hour", "type": "uint8" }, { "name": "minute", "type": "uint8" }, { "name": "second", "type": "uint8" }], "name": "toTimestamp", "outputs": [{ "name": "timestamp", "type": "uint256" }], "payable": false, "stateMutability": "pure", "type": "function" }, { "constant": true, "inputs": [{ "name": "", "type": "address" }, { "name": "", "type": "uint256" }], "name": "userPolicies", "outputs": [{ "name": "", "type": "uint256" }], "payable": false, "stateMutability": "view", "type": "function" }], '0xe01433194F20D5d6c3a4cB3F9652590F9C9A6d14');
+      var FarminsureContract = new web3.eth.Contract(
+        [
+          {
+            constant: false,
+            inputs: [
+              { name: "_policyId", type: "uint256" },
+              { name: "_timestamp", type: "uint256" },
+            ],
+            name: "claim",
+            outputs: [],
+            payable: false,
+            stateMutability: "nonpayable",
+            type: "function",
+          },
+          {
+            constant: false,
+            inputs: [
+              { name: "_requestId", type: "bytes32" },
+              { name: "_result", type: "int256" },
+            ],
+            name: "fulfill",
+            outputs: [],
+            payable: false,
+            stateMutability: "nonpayable",
+            type: "function",
+          },
+          {
+            constant: false,
+            inputs: [
+              { name: "_area", type: "uint256" },
+              { name: "_location", type: "string" },
+              { name: "_forFlood", type: "bool" },
+              { name: "_cropId", type: "uint8" },
+            ],
+            name: "newPolicy",
+            outputs: [],
+            payable: true,
+            stateMutability: "payable",
+            type: "function",
+          },
+          {
+            inputs: [
+              { name: "_link", type: "address" },
+              { name: "_oracle", type: "address" },
+              { name: "_jobId", type: "bytes32" },
+              { name: "_oraclePaymentAmount", type: "uint256" },
+            ],
+            payable: false,
+            stateMutability: "nonpayable",
+            type: "constructor",
+          },
+          { payable: true, stateMutability: "payable", type: "fallback" },
+          {
+            anonymous: false,
+            inputs: [{ indexed: true, name: "id", type: "bytes32" }],
+            name: "ChainlinkRequested",
+            type: "event",
+          },
+          {
+            anonymous: false,
+            inputs: [{ indexed: true, name: "id", type: "bytes32" }],
+            name: "ChainlinkFulfilled",
+            type: "event",
+          },
+          {
+            anonymous: false,
+            inputs: [{ indexed: true, name: "id", type: "bytes32" }],
+            name: "ChainlinkCancelled",
+            type: "event",
+          },
+          {
+            constant: true,
+            inputs: [{ name: "", type: "uint256" }],
+            name: "cropTypes",
+            outputs: [
+              { name: "name", type: "string" },
+              { name: "premiumPerAcre", type: "uint256" },
+              { name: "duration", type: "uint256" },
+              { name: "coveragePerAcre", type: "uint256" },
+            ],
+            payable: false,
+            stateMutability: "view",
+            type: "function",
+          },
+          {
+            constant: true,
+            inputs: [{ name: "timestamp", type: "uint256" }],
+            name: "getDay",
+            outputs: [{ name: "", type: "uint8" }],
+            payable: false,
+            stateMutability: "pure",
+            type: "function",
+          },
+          {
+            constant: true,
+            inputs: [
+              { name: "month", type: "uint8" },
+              { name: "year", type: "uint16" },
+            ],
+            name: "getDaysInMonth",
+            outputs: [{ name: "", type: "uint8" }],
+            payable: false,
+            stateMutability: "pure",
+            type: "function",
+          },
+          {
+            constant: true,
+            inputs: [{ name: "timestamp", type: "uint256" }],
+            name: "getHour",
+            outputs: [{ name: "", type: "uint8" }],
+            payable: false,
+            stateMutability: "pure",
+            type: "function",
+          },
+          {
+            constant: true,
+            inputs: [{ name: "timestamp", type: "uint256" }],
+            name: "getMinute",
+            outputs: [{ name: "", type: "uint8" }],
+            payable: false,
+            stateMutability: "pure",
+            type: "function",
+          },
+          {
+            constant: true,
+            inputs: [{ name: "timestamp", type: "uint256" }],
+            name: "getMonth",
+            outputs: [{ name: "", type: "uint8" }],
+            payable: false,
+            stateMutability: "pure",
+            type: "function",
+          },
+          {
+            constant: true,
+            inputs: [{ name: "timestamp", type: "uint256" }],
+            name: "getSecond",
+            outputs: [{ name: "", type: "uint8" }],
+            payable: false,
+            stateMutability: "pure",
+            type: "function",
+          },
+          {
+            constant: true,
+            inputs: [{ name: "timestamp", type: "uint256" }],
+            name: "getWeekday",
+            outputs: [{ name: "", type: "uint8" }],
+            payable: false,
+            stateMutability: "pure",
+            type: "function",
+          },
+          {
+            constant: true,
+            inputs: [{ name: "timestamp", type: "uint256" }],
+            name: "getYear",
+            outputs: [{ name: "", type: "uint16" }],
+            payable: false,
+            stateMutability: "pure",
+            type: "function",
+          },
+          {
+            constant: true,
+            inputs: [{ name: "year", type: "uint16" }],
+            name: "isLeapYear",
+            outputs: [{ name: "", type: "bool" }],
+            payable: false,
+            stateMutability: "pure",
+            type: "function",
+          },
+          {
+            constant: true,
+            inputs: [{ name: "year", type: "uint256" }],
+            name: "leapYearsBefore",
+            outputs: [{ name: "", type: "uint256" }],
+            payable: false,
+            stateMutability: "pure",
+            type: "function",
+          },
+          {
+            constant: true,
+            inputs: [{ name: "", type: "uint256" }],
+            name: "policies",
+            outputs: [
+              { name: "policyId", type: "uint256" },
+              { name: "user", type: "address" },
+              { name: "premium", type: "uint256" },
+              { name: "area", type: "uint256" },
+              { name: "startTime", type: "uint256" },
+              { name: "endTime", type: "uint256" },
+              { name: "location", type: "string" },
+              { name: "coverageAmount", type: "uint256" },
+              { name: "forFlood", type: "bool" },
+              { name: "cropId", type: "uint8" },
+              { name: "state", type: "uint8" },
+            ],
+            payable: false,
+            stateMutability: "view",
+            type: "function",
+          },
+          {
+            constant: true,
+            inputs: [],
+            name: "resultReceived",
+            outputs: [{ name: "", type: "bool" }],
+            payable: false,
+            stateMutability: "view",
+            type: "function",
+          },
+          {
+            constant: true,
+            inputs: [
+              { name: "year", type: "uint16" },
+              { name: "month", type: "uint8" },
+              { name: "day", type: "uint8" },
+              { name: "hour", type: "uint8" },
+              { name: "minute", type: "uint8" },
+            ],
+            name: "toTimestamp",
+            outputs: [{ name: "timestamp", type: "uint256" }],
+            payable: false,
+            stateMutability: "pure",
+            type: "function",
+          },
+          {
+            constant: true,
+            inputs: [
+              { name: "year", type: "uint16" },
+              { name: "month", type: "uint8" },
+              { name: "day", type: "uint8" },
+              { name: "hour", type: "uint8" },
+            ],
+            name: "toTimestamp",
+            outputs: [{ name: "timestamp", type: "uint256" }],
+            payable: false,
+            stateMutability: "pure",
+            type: "function",
+          },
+          {
+            constant: true,
+            inputs: [
+              { name: "year", type: "uint16" },
+              { name: "month", type: "uint8" },
+              { name: "day", type: "uint8" },
+            ],
+            name: "toTimestamp",
+            outputs: [{ name: "timestamp", type: "uint256" }],
+            payable: false,
+            stateMutability: "pure",
+            type: "function",
+          },
+          {
+            constant: true,
+            inputs: [
+              { name: "year", type: "uint16" },
+              { name: "month", type: "uint8" },
+              { name: "day", type: "uint8" },
+              { name: "hour", type: "uint8" },
+              { name: "minute", type: "uint8" },
+              { name: "second", type: "uint8" },
+            ],
+            name: "toTimestamp",
+            outputs: [{ name: "timestamp", type: "uint256" }],
+            payable: false,
+            stateMutability: "pure",
+            type: "function",
+          },
+          {
+            constant: true,
+            inputs: [
+              { name: "", type: "address" },
+              { name: "", type: "uint256" },
+            ],
+            name: "userPolicies",
+            outputs: [{ name: "", type: "uint256" }],
+            payable: false,
+            stateMutability: "view",
+            type: "function",
+          },
+        ],
+        "0xe01433194F20D5d6c3a4cB3F9652590F9C9A6d14"
+      );
 
+      $(document).ready(function () {
+        $("#create").click(function () {
+          $("#create").addClass(
+            "animated loading u-center loading-right loading-white"
+          );
 
-    $(document).ready(function () {
-      $("#create").click(function () {
+          var policyId = $("#policyId").val();
 
-        $("#create").addClass('animated loading u-center loading-right loading-white');
+          var policy;
 
-        var policyId = $('#policyId').val();
-
-        var policy;
-
-        AgrinsureContract.methods.policies(policyId).call((err, res) => {
-          if (!err) {
-            policy = res;
-            console.log(policy);
-            $("#create").removeClass('animated loading u-center loading-right loading-white');
-            $("#create").text("View Another Policy");
-          } else {
-            $("#create").removeClass('animated loading u-center loading-right loading-white');
-            $("#create").text("Some Error Occurred");
-            $("#create").css("background", "var(--cirrus-danger)");
-          }
+          FarminsureContract.methods.policies(policyId).call((err, res) => {
+            if (!err) {
+              policy = res;
+              console.log(policy);
+              $("#create").removeClass(
+                "animated loading u-center loading-right loading-white"
+              );
+              $("#create").text("View Another Policy");
+            } else {
+              $("#create").removeClass(
+                "animated loading u-center loading-right loading-white"
+              );
+              $("#create").text("Some Error Occurred");
+              $("#create").css("background", "var(--cirrus-danger)");
+            }
+          });
         });
       });
-    });
+    </script>
 
-  </script>
+    <script>
+      // TOGGLE DROPDOWN MENU
+      // Show / Hide menu when clicked
+      $(".has-sub").on("click", function (e) {
+        // Find all with ID
+        $(".dropdown-menu")
+          .not($(this).children(".dropdown-menu"))
+          .removeClass("dropdown-shown"); // Hide other menus
+        $(".has-sub").not($(this)).removeClass("active");
+        $(this).children(".dropdown-menu").toggleClass("dropdown-shown");
+        $(this).toggleClass("active");
+      });
 
-  <script>
+      $("section")
+        .not("#header-btn")
+        .on("click", function (e) {
+          // Hide when clicking section (will modify later)
+          $(".dropdown-menu").removeClass("dropdown-shown"); // Hide other menus clicking on window
+          $("#header-menu").removeClass("active");
+          $(".nav-item").removeClass("active");
+        });
 
-    // TOGGLE DROPDOWN MENU
-    // Show / Hide menu when clicked
-    $('.has-sub').on('click', function (e) { // Find all with ID
-      $('.dropdown-menu').not($(this).children('.dropdown-menu')).removeClass('dropdown-shown'); // Hide other menus
-      $('.has-sub').not($(this)).removeClass('active');
-      $(this).children('.dropdown-menu').toggleClass('dropdown-shown');
-      $(this).toggleClass('active');
-    });
+      // TOGGLE HEADER-NAV
+      // Show dropdown when clicked
+      $("#header-btn").on("click", function (e) {
+        $("#header-menu").toggleClass("active");
+        $(".nav-btn").toggleClass("active");
+      });
 
-    $('section').not('#header-btn').on('click', function (e) { // Hide when clicking section (will modify later)
-      $('.dropdown-menu').removeClass('dropdown-shown'); // Hide other menus clicking on window
-      $('#header-menu').removeClass('active');
-      $('.nav-item').removeClass('active');
-    });
+      // Hide menu after clicking menu item
+      $(".dropdown-menu li").on("click", function (e) {
+        $("#header-menu").removeClass("active");
+        $(".nav-btn").removeClass("active");
+      });
+    </script>
 
-
-    // TOGGLE HEADER-NAV
-    // Show dropdown when clicked
-    $('#header-btn').on('click', function (e) {
-      $('#header-menu').toggleClass('active');
-      $('.nav-btn').toggleClass('active');
-    });
-
-    // Hide menu after clicking menu item
-    $('.dropdown-menu li').on('click', function (e) {
-      $('#header-menu').removeClass('active');
-      $('.nav-btn').removeClass('active');
-    });
-  </script>
-
-  <script src="https://use.fontawesome.com/a696b91557.js"></script>
-</body>
-
+    <script src="https://use.fontawesome.com/a696b91557.js"></script>
+  </body>
 </html>
