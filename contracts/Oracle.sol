@@ -2,7 +2,7 @@
 pragma solidity 0.8.0;
 
 contract Oracle {
-    uint public precipitation;
+    uint public precipitation = 16; // flood
 
     function getPrecipitation(string memory) external view returns(uint) {
         return precipitation;

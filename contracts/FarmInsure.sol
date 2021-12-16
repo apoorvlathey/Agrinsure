@@ -1,7 +1,11 @@
 // SPDX-License-Identifier: MIT
 pragma solidity 0.8.0;
 
-import "./Oracle.sol";
+// import "./Oracle.sol";
+
+interface Oracle{
+    function getPrecipitation(string memory) external view returns(uint);
+}
 
 contract FarmInsure {
     //for BaseMin to BaseMax -> BasePayout% . for > Max -> MaxPayout%
@@ -48,20 +52,23 @@ contract FarmInsure {
     function newPolicy (uint _area, string memory _location, bool _forFlood, uint8 _cropId) external payable{
         require(msg.value == (cropTypes[_cropId].premiumPerAcre * _area),"Incorrect Premium Amount");
 
-        uint pId = policies.length + 1;
+        uint pId = policies.length;
         userPolicies[msg.sender].push(pId);
-        policy storage p = policies[pId];
-
-        p.user = payable(msg.sender);
-        p.premium = cropTypes[_cropId].premiumPerAcre * _area;
-        p.area = _area;
-        p.startTime = block.timestamp;
-        p.endTime = block.timestamp + cropTypes[_cropId].duration * 30*24*60*60;  //converting months to seconds
-        p.location = _location;
-        p.coverageAmount = cropTypes[_cropId].coveragePerAcre * _area;
-        p.forFlood = _forFlood;
-        p.cropId = _cropId;
-        p.state = policyState.Active;
+        policies.push(
+            policy({
+                policyId: pId,
+                user: payable(msg.sender),
+                premium: cropTypes[_cropId].premiumPerAcre * _area,
+                area: _area,
+                startTime: block.timestamp,
+                endTime: block.timestamp + cropTypes[_cropId].duration * 30*24*60*60,  //converting months to second
+                location: _location,
+                coverageAmount: cropTypes[_cropId].coveragePerAcre * _area,
+                forFlood: _forFlood,
+                cropId: _cropId,
+                state: policyState.Active
+            })
+        );     
     }
 
     function newCrop(uint8 _cropId,string memory _name, uint _premiumPerAcre, uint _duration, uint _coveragePerAcre) internal {
@@ -74,8 +81,8 @@ contract FarmInsure {
     constructor(address _oracle) {
         oracle = Oracle(_oracle);
 
-        newCrop(0, "rabi", 1, 6, 7);
-        newCrop(1, "kharif", 2, 4, 10);
+        newCrop(0, "rabi", 0.001 ether, 6, 0.007 ether);
+        newCrop(1, "kharif", 0.002 ether, 4, 0.010 ether);
     }
 
     function claim(uint _policyId) public {
@@ -133,4 +140,6 @@ contract FarmInsure {
             }
         }
     }
+
+    receive() external payable{}
 }
